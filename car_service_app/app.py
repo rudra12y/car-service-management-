@@ -6,7 +6,7 @@ app = Flask(__name__)
 CORS(app)  # Remote requests allow karne ke liye
 
 # AAPKA GOOGLE APPS SCRIPT WEB APP URL YAHAN CHIPKAYEIN:
-GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwmFGHVj8hgs6lKpKNiTez41vSaqxcZI82-6UCof6pEfezYwToCVdECogMHopy8ii5K/execc"
+GOOGLE_SCRIPT_URL = "GOOGLE_SCRIPT_URL = "GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx_AAPKA_REAL_URL_HERE/exec""
 
 # Static / Frontend Dashboard Link
 SHEET_URL = "https://docs.google.com/spreadsheets/d/1frA1eDY4EMH861I50f8DAlgFghywxoR90dlAjCnUFME/edit"
