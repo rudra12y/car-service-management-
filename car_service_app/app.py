@@ -5,10 +5,9 @@ import requests
 app = Flask(__name__)
 CORS(app)  # Remote requests allow karne ke liye
 
-# AAPKA GOOGLE APPS SCRIPT WEB APP URL YAHAN CHIPKAYEIN:
-GOOGLE_SCRIPT_URL = "GOOGLE_SCRIPT_URL = "GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbx_AAPKA_REAL_URL_HERE/exec""
+# Aapka Web App URL:
+GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwmFGHVj8hgs6IKpKNiTez41vSaqxcZl82/exec"
 
-# Static / Frontend Dashboard Link
 SHEET_URL = "https://docs.google.com/spreadsheets/d/1frA1eDY4EMH861I50f8DAlgFghywxoR90dlAjCnUFME/edit"
 
 # Initial Data Storage
@@ -66,7 +65,7 @@ def add_booking():
     }
     bookings.append(new_booking)
 
-    # Automatically send booking data to Google Sheet
+    # Google Sheet Sync
     try:
         requests.post(GOOGLE_SCRIPT_URL, json=new_booking, timeout=5)
     except Exception as e:
