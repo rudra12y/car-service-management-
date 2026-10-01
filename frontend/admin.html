@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Admin Dashboard</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h2>Service Operations - Admin</h2>
+      <nav>
+        <a href="index.html">Customer View</a>
+      </nav>
+    </header>
+
+    <div class="card">
+      <h3>Manage Service Orders</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Customer & Contact</th>
+            <th>Vehicle & Service</th>
+            <th>Assigned Mechanic</th>
+            <th>Update Status</th>
+          </tr>
+        </thead>
+        <tbody id="adminTableBody"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <script>
+    const API_URL = 'http://localhost:5000/api/bookings';
+
+    async function loadAdminData() {
+      const res = await fetch(API_URL);
+      const data = await res.json();
+      const tbody = document.getElementById('adminTableBody');
+
+      tbody.innerHTML = data.map(item => `
+        <tr>
+          <td><strong>${item.customerName}</strong><br><small>${item.phone}</small></td>
+          <td>${item.carModel}<br><small>${item.serviceType}</small></td>
+          <td>
+            <input type="text" value="${item.assignedMechanic}" 
+              onchange="updateMechanic('${item._id}', this.value)" style="width: 130px;">
+          </td>
+          <td>
+            <select onchange="updateStatus('${item._id}', this.value)">
+              <option value="Pending" ${item.status === 'Pending' ? 'selected' : ''}>Pending</option>
+              <option value="In Progress" ${item.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
+              <option value="Completed" ${item.status === 'Completed' ? 'selected' : ''}>Completed</option>
+            </select>
+          </td>
+        </tr>
+      `).join('');
+    }
+
+    async function updateStatus(id, newStatus) {
+      await fetch(`${API_URL}/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ status: newStatus })
+      });
+      alert('Status updated!');
+      loadAdminData();
+    }
+
+    async function updateMechanic(id, mechanicName) {
+      await fetch(`${API_URL}/${id}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ assignedMechanic: mechanicName })
+      });
+      alert('Mechanic updated!');
+    }
+
+    loadAdminData();
+  </script>
+</body>
+</html>
