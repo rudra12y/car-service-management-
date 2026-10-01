@@ -1,10 +1,14 @@
 from flask import Flask, request, jsonify
 from flask_cors import CORS
+import requests
 
 app = Flask(__name__)
-CORS(app)  # Remote origins/requests allow karne ke liye
+CORS(app)  # Remote requests allow karne ke liye
 
-# Live Google Sheet Link
+# AAPKA GOOGLE APPS SCRIPT WEB APP URL YAHAN CHIPKAYEIN:
+GOOGLE_SCRIPT_URL = "https://script.google.com/macros/s/AKfycbwmFGHVj8hgs6lKpKNiTez41vSaqxcZI82-6UCof6pEfezYwToCVdECogMHopy8ii5K/execc"
+
+# Static / Frontend Dashboard Link
 SHEET_URL = "https://docs.google.com/spreadsheets/d/1frA1eDY4EMH861I50f8DAlgFghywxoR90dlAjCnUFME/edit"
 
 # Initial Data Storage
@@ -61,6 +65,13 @@ def add_booking():
         "status": "Pending"
     }
     bookings.append(new_booking)
+
+    # Automatically send booking data to Google Sheet
+    try:
+        requests.post(GOOGLE_SCRIPT_URL, json=new_booking, timeout=5)
+    except Exception as e:
+        print("Google Sheet Sync Error:", e)
+
     return jsonify({"message": "Booking submitted successfully!", "sheet_url": SHEET_URL, "booking": new_booking}), 201
 
 @app.route('/api/bookings/<booking_id>', methods=['PATCH'])
