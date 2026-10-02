@@ -2,9 +2,8 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)  # Cross-Origin Resource Sharing enable karne ke liye
+CORS(app)
 
-# Local memory booking list (Server re-start hone par reset hone se bachane ke liye)
 bookings = []
 
 @app.route('/api/bookings', methods=['GET'])
@@ -21,6 +20,7 @@ def add_booking():
         "customerName": data.get("customerName"),
         "phone": data.get("phone"),
         "carModel": data.get("carModel"),
+        "bookingDate": data.get("bookingDate"),
         "serviceType": data.get("serviceType"),
         "status": "Pending"
     }
@@ -37,3 +37,4 @@ def toggle_status(index):
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
+    

@@ -4,7 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Car Service Booking</title>
-    <link rel="stylesheet" href="style.css?v=3">
+    <link rel="stylesheet" href="style.css?v=6">
+    <style>
+        /* Pop-up Overlay & Animation Styling */
+        .modal-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            backdrop-filter: blur(5px);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease-in-out;
+            z-index: 999;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            visibility: visible;
+        }
+
+        .modal-card {
+            background: rgba(20, 20, 35, 0.95);
+            border: 2px solid #00d4ff;
+            box-shadow: 0 0 25px rgba(0, 212, 255, 0.4);
+            border-radius: 15px;
+            padding: 30px;
+            text-align: center;
+            max-width: 350px;
+            width: 85%;
+            color: #fff;
+            transform: scale(0.5);
+            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+
+        .modal-overlay.active .modal-card {
+            transform: scale(1);
+        }
+
+        .modal-card h2 {
+            color: #00ff66;
+            margin-bottom: 10px;
+            font-size: 1.5rem;
+        }
+
+        .modal-card p {
+            color: #ccc;
+            font-size: 0.95rem;
+            margin-bottom: 20px;
+        }
+
+        .modal-card button {
+            background: #00d4ff;
+            color: #111;
+            font-weight: bold;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+
+        .modal-card button:hover {
+            background: #00ff66;
+            box-shadow: 0 0 10px #00ff66;
+        }
+    </style>
 </head>
 <body>
     <div class="container">
@@ -16,13 +86,27 @@
             </div>
             
             <div class="form-group">
-                <label for="phone">Phone Number</label>
-                <input type="tel" id="phone" placeholder="Enter phone number" required>
+                <label for="phone">Phone Number (10 Digits)</label>
+                <input 
+                    type="tel" 
+                    id="phone" 
+                    placeholder="Enter 10-digit phone number" 
+                    maxlength="10" 
+                    minlength="10" 
+                    pattern="[0-9]{10}" 
+                    title="Please enter exactly 10 digits" 
+                    oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                    required>
             </div>
             
             <div class="form-group">
                 <label for="carModel">Vehicle Model / Car</label>
                 <input type="text" id="carModel" placeholder="e.g. Swift, Alto, Activa" required>
+            </div>
+
+            <div class="form-group">
+                <label for="bookingDate">Service Date</label>
+                <input type="date" id="bookingDate" required>
             </div>
             
             <div class="form-group">
@@ -46,8 +130,30 @@
         </form>
     </div>
 
+    <!-- Success Pop-Up Modal -->
+    <div class="modal-overlay" id="successModal">
+        <div class="modal-card">
+            <h2>🎉 Success!</h2>
+            <p>Your Service Booked Successfully!</p>
+            <button onclick="closeModal()">OK</button>
+        </div>
+    </div>
+
     <script>
         const API_URL = "http://127.0.0.1:5000/api/bookings"; 
+
+        // Set minimum date to Today so users can't pick past dates
+        const dateInput = document.getElementById('bookingDate');
+        const today = new Date().toISOString().split('T')[0];
+        dateInput.setAttribute('min', today);
+
+        function showModal() {
+            document.getElementById('successModal').classList.add('active');
+        }
+
+        function closeModal() {
+            document.getElementById('successModal').classList.remove('active');
+        }
 
         document.getElementById('bookingForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -60,6 +166,7 @@
                 customerName: document.getElementById('customerName').value,
                 phone: document.getElementById('phone').value,
                 carModel: document.getElementById('carModel').value,
+                bookingDate: document.getElementById('bookingDate').value,
                 serviceType: document.getElementById('serviceType').value
             };
 
@@ -71,7 +178,7 @@
                 });
 
                 if (response.ok) {
-                    alert('✅ Booking Submitted Successfully!');
+                    showModal();
                     document.getElementById('bookingForm').reset();
                 } else {
                     alert('❌ Failed to submit booking. Please try again.');
