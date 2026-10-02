@@ -5,8 +5,8 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 
-# Allow all origins for CORS to fix frontend & browser connection issues
-CORS(app, resources={r"/*": {"origins": "*"}})
+# Complete CORS configuration to prevent request blocks
+CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
 EXCEL_FILE = "car_service_orders.xlsx"
 
@@ -44,8 +44,11 @@ def get_bookings():
     except Exception as e:
         return jsonify({"error": str(e)}), 500
 
-@app.route("/api/bookings", methods=["POST"])
+@app.route("/api/bookings", methods=["POST", "OPTIONS"])
 def add_booking():
+    if request.method == "OPTIONS":
+        return jsonify({"status": "OK"}), 200
+        
     try:
         data = request.json
         if not data:

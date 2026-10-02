@@ -4,161 +4,63 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Car Service Booking</title>
-    <link rel="stylesheet" href="style.css?v=8">
-    <style>
-        .modal-overlay {
-            position: fixed;
-            top: 0; left: 0;
-            width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(5px);
-            display: flex; justify-content: center; align-items: center;
-            opacity: 0; visibility: hidden;
-            transition: all 0.3s ease-in-out;
-            z-index: 999;
-        }
-        .modal-overlay.active { opacity: 1; visibility: visible; }
-        .modal-card {
-            background: rgba(20, 20, 35, 0.95);
-            border: 2px solid #00d4ff;
-            box-shadow: 0 0 25px rgba(0, 212, 255, 0.4);
-            border-radius: 15px;
-            padding: 30px;
-            text-align: center;
-            max-width: 350px; width: 85%;
-            color: #fff;
-            transform: scale(0.5);
-            transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-        }
-        .modal-overlay.active .modal-card { transform: scale(1); }
-        .modal-card h2 { margin-bottom: 10px; font-size: 1.5rem; }
-        .modal-card p { color: #ccc; font-size: 0.95rem; margin-bottom: 20px; }
-        .modal-card button {
-            background: #00d4ff; color: #111; font-weight: bold;
-            border: none; padding: 10px 20px; border-radius: 8px;
-            cursor: pointer; transition: 0.2s;
-        }
-        .modal-card button:hover { background: #00ff66; box-shadow: 0 0 10px #00ff66; }
-    </style>
+    <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>⚙️ Book Your Car Service</h1>
+    <div class="booking-container">
+        <h2>Car Service Booking</h2>
         <form id="bookingForm">
-            <div class="form-group">
-                <label for="customerName">Customer Name</label>
-                <input type="text" id="customerName" placeholder="Enter your full name" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="phone">Phone Number (10 Digits)</label>
-                <input type="tel" id="phone" placeholder="Enter 10-digit phone number" maxlength="10" minlength="10" pattern="[0-9]{10}" oninput="this.value = this.value.replace(/[^0-9]/g, '')" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="carModel">Vehicle Model / Car</label>
-                <input type="text" id="carModel" placeholder="e.g. Swift, Alto, Activa" required>
-            </div>
-
-            <div class="form-group">
-                <label for="bookingDate">Service Date</label>
-                <input type="date" id="bookingDate" required>
-            </div>
-            
-            <div class="form-group">
-                <label for="serviceType">Service Type</label>
-                <select id="serviceType" required>
-                    <option value="">Select Service</option>
-                    <option value="Full Service">Full Service</option>
-                    <option value="Oil Change">Oil Change</option>
-                    <option value="Full Detailing">Full Detailing</option>
-                    <option value="Brake Inspection">Brake Inspection</option>
-                    <option value="Tyre Change">Tyre Change</option>
-                    <option value="Alignment">Alignment</option>
-                    <option value="AC Check">AC Check</option>
-                    <option value="Air Filter">Air Filter</option>
-                    <option value="Gear Box">Gear Box</option>
-                    <option value="Denting Repair">Denting Repair</option>
-                </select>
-            </div>
-            
-            <button type="submit">Submit Booking</button>
+            <input type="text" id="name" placeholder="Full Name" required>
+            <input type="tel" id="phone" placeholder="Phone Number (10 Digits)" required pattern="[0-9]{10}">
+            <input type="text" id="car_model" placeholder="Vehicle Model / Car" required>
+            <input type="date" id="service_date" required>
+            <select id="service_type" required>
+                <option value="Full Service">Full Service</option>
+                <option value="Tyre Change">Tyre Change</option>
+                <option value="Oil Change">Oil Change</option>
+                <option value="Washing">Washing</option>
+            </select>
+            <button type="submit" id="submitBtn">SUBMIT BOOKING</button>
         </form>
     </div>
 
-    <!-- Success / Waiting Pop-Up Modal -->
-    <div class="modal-overlay" id="statusModal">
-        <div class="modal-card">
-            <h2 id="modalTitle">🎉 Success!</h2>
-            <p id="modalMsg">Your Service Booked Successfully!</p>
-            <button onclick="closeModal()">OK</button>
-        </div>
-    </div>
-
     <script>
-        // Live Render Backend URL for mobile/online access
-        const API_URL = "https://car-service-management-backend.onrender.com/api/bookings"; 
+        const BACKEND_URL = "https://car-service-management-backend.onrender.com/api/bookings";
 
-        const dateInput = document.getElementById('bookingDate');
-        const today = new Date().toISOString().split('T')[0];
-        dateInput.setAttribute('min', today);
-
-        function showModal(status) {
-            const title = document.getElementById('modalTitle');
-            const msg = document.getElementById('modalMsg');
-
-            if (status === 'Waiting') {
-                title.innerText = "⏳ Slot Full!";
-                title.style.color = "#ff9100";
-                msg.innerText = "This date already has 3 bookings. You are added to the Waiting List!";
-            } else {
-                title.innerText = "🎉 Success!";
-                title.style.color = "#00ff66";
-                msg.innerText = "Your Service Booked Successfully!";
-            }
-
-            document.getElementById('statusModal').classList.add('active');
-        }
-
-        function closeModal() {
-            document.getElementById('statusModal').classList.remove('active');
-        }
-
-        document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+        document.getElementById("bookingForm").addEventListener("submit", async function(e) {
             e.preventDefault();
-            
-            const submitBtn = e.target.querySelector('button');
-            submitBtn.innerText = "Submitting...";
+            const submitBtn = document.getElementById("submitBtn");
+            submitBtn.innerText = "SUBMITTING...";
             submitBtn.disabled = true;
 
-            const bookingData = {
-                customerName: document.getElementById('customerName').value,
-                phone: document.getElementById('phone').value,
-                carModel: document.getElementById('carModel').value,
-                bookingDate: document.getElementById('bookingDate').value,
-                serviceType: document.getElementById('serviceType').value
+            const formData = {
+                name: document.getElementById("name").value,
+                phone: document.getElementById("phone").value,
+                car_model: document.getElementById("car_model").value,
+                service_date: document.getElementById("service_date").value,
+                service_type: document.getElementById("service_type").value
             };
 
             try {
-                const response = await fetch(API_URL, {
-                    method: 'POST',
-                    headers: { 'Content-Type': 'application/json' },
-                    body: JSON.stringify(bookingData)
+                const response = await fetch(BACKEND_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(formData)
                 });
 
-                const result = await response.json();
-
                 if (response.ok) {
-                    showModal(result.status);
-                    document.getElementById('bookingForm').reset();
+                    alert("Booking Submitted Successfully!");
+                    document.getElementById("bookingForm").reset();
                 } else {
-                    alert('❌ Failed to submit booking.');
+                    const errData = await response.json();
+                    alert("Error: " + (errData.error || "Failed to submit booking"));
                 }
             } catch (error) {
-                console.error('Error:', error);
-                alert('⚠️ Server connection error! Please wait a moment while backend connects.');
+                alert("Server connection error! Please wait a moment while backend connects.");
             } finally {
-                submitBtn.innerText = "Submit Booking";
+                submitBtn.innerText = "SUBMIT BOOKING";
                 submitBtn.disabled = false;
             }
         });
