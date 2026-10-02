@@ -1,82 +1,75 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Admin Dashboard</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard - Car Service</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .container { max-width: 900px; }
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; }
+        th, td { padding: 12px; border-bottom: 1px solid rgba(255,255,255,0.1); text-align: left; }
+        th { color: #00d4ff; font-family: 'Orbitron', sans-serif; }
+        .badge { padding: 4px 8px; border-radius: 4px; font-weight: bold; font-size: 0.85rem; }
+        .Pending { background: #ffaa00; color: #000; }
+        .In-Progress { background: #00d4ff; color: #000; }
+        .Completed { background: #00ff88; color: #000; }
+    </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h2>Service Operations - Admin</h2>
-      <nav>
-        <a href="index.html">Customer View</a>
-      </nav>
-    </header>
-
-    <div class="card">
-      <h3>Manage Service Orders</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Customer & Contact</th>
-            <th>Vehicle & Service</th>
-            <th>Assigned Mechanic</th>
-            <th>Update Status</th>
-          </tr>
-        </thead>
-        <tbody id="adminTableBody"></tbody>
-      </table>
+    <div class="container">
+        <h1>🔧 Admin Dashboard</h1>
+        <table>
+            <thead>
+                <tr>
+                    <th>ID</th>
+                    <th>Customer Name</th>
+                    <th>Phone</th>
+                    <th>Vehicle</th>
+                    <th>Service</th>
+                    <th>Status</th>
+                </tr>
+            </thead>
+            <tbody id="bookingsTable">
+                <!-- Live data will load here -->
+            </tbody>
+        </table>
     </div>
-  </div>
 
-  <script>
-    const API_URL = 'http://localhost:5000/api/bookings';
+    <script>
+        const API_URL = "https://car-service-management.onrender.com/api/bookings";
 
-    async function loadAdminData() {
-      const res = await fetch(API_URL);
-      const data = await res.json();
-      const tbody = document.getElementById('adminTableBody');
+        async function fetchBookings() {
+            try {
+                const response = await fetch(API_URL);
+                const data = await response.json();
+                
+                const tableBody = document.getElementById('bookingsTable');
+                tableBody.innerHTML = '';
 
-      tbody.innerHTML = data.map(item => `
-        <tr>
-          <td><strong>${item.customerName}</strong><br><small>${item.phone}</small></td>
-          <td>${item.carModel}<br><small>${item.serviceType}</small></td>
-          <td>
-            <input type="text" value="${item.assignedMechanic}" 
-              onchange="updateMechanic('${item._id}', this.value)" style="width: 130px;">
-          </td>
-          <td>
-            <select onchange="updateStatus('${item._id}', this.value)">
-              <option value="Pending" ${item.status === 'Pending' ? 'selected' : ''}>Pending</option>
-              <option value="In Progress" ${item.status === 'In Progress' ? 'selected' : ''}>In Progress</option>
-              <option value="Completed" ${item.status === 'Completed' ? 'selected' : ''}>Completed</option>
-            </select>
-          </td>
-        </tr>
-      `).join('');
-    }
+                data.forEach(item => {
+                    const statusClass = item.status.replace(" ", "-");
+                    tableBody.innerHTML += `
+                        <tr>
+                            <td>#${item.id}</td>
+                            <td>${item.customerName}</td>
+                            <td>${item.phone}</td>
+                            <td>${item.carModel}</td>
+                            <td>${item.serviceType}</td>
+                            <td><span class="badge ${statusClass}">${item.status}</span></td>
+                        </tr>
+                    `;
+                });
+            } catch (error) {
+                console.error("Error fetching bookings:", error);
+            }
+        }
 
-    async function updateStatus(id, newStatus) {
-      await fetch(`${API_URL}/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ status: newStatus })
-      });
-      alert('Status updated!');
-      loadAdminData();
-    }
+        // Initial Load
+        fetchBookings();
 
-    async function updateMechanic(id, mechanicName) {
-      await fetch(`${API_URL}/${id}`, {
-        method: 'PATCH',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ assignedMechanic: mechanicName })
-      });
-      alert('Mechanic updated!');
-    }
-
-    loadAdminData();
-  </script>
+        // Auto Refresh every 3 seconds for Live Updates
+        setInterval(fetchBookings, 3000);
+    </script>
 </body>
 </html>

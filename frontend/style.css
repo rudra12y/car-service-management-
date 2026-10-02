@@ -1,17 +1,114 @@
-* { box-sizing: border-box; font-family: Arial, sans-serif; margin: 0; padding: 0; }
-body { background: #f4f6f8; padding: 20px; color: #333; }
-.container { max-width: 800px; margin: 0 auto; }
-header { background: #1e293b; color: #fff; padding: 15px; border-radius: 8px; margin-bottom: 20px; display: flex; justify-content: space-between; align-items: center; }
-header a { color: #38bdf8; text-decoration: none; margin-left: 15px; font-weight: bold; }
-.card { background: white; padding: 20px; border-radius: 8px; box-shadow: 0 2px 5px rgba(0,0,0,0.1); margin-bottom: 20px; }
-form { display: grid; gap: 12px; }
-input, select, button { padding: 10px; font-size: 14px; border: 1px solid #ccc; border-radius: 4px; }
-button { background: #2563eb; color: white; border: none; cursor: pointer; font-weight: bold; }
-button:hover { background: #1d4ed8; }
-table { width: 100%; border-collapse: collapse; margin-top: 15px; }
-th, td { padding: 10px; border: 1px solid #e2e8f0; text-align: left; }
-th { background: #f8fafc; }
-.badge { padding: 4px 8px; border-radius: 4px; font-size: 12px; color: white; display: inline-block; }
-.badge-Pending { background: #eab308; }
-.badge-In-Progress { background: #3b82f6; }
-.badge-Completed { background: #22c55e; }
+@import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Poppins:wght@300;400;600&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Background Animation with Pure CSS Fallback & High Res Mechanical Garage Wallpaper */
+body {
+    font-family: 'Poppins', sans-serif;
+    color: #ffffff;
+    min-height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: linear-gradient(135deg, rgba(10, 15, 25, 0.92), rgba(5, 8, 15, 0.96)),
+                url('https://images.unsplash.com/photo-1613214149922-f1809c99b414?q=80&w=1200&auto=format&fit=crop') no-repeat center center fixed;
+    background-size: cover;
+    position: relative;
+    overflow-x: hidden;
+}
+
+/* Dynamic Animated Glowing Overlay */
+body::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    left: -50%;
+    width: 200%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0, 212, 255, 0.15) 10%, transparent 50%),
+                radial-gradient(circle at 80% 80%, rgba(255, 69, 0, 0.15) 10%, transparent 50%);
+    animation: rotateGlow 12s linear infinite;
+    pointer-events: none;
+}
+
+@keyframes rotateGlow {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+
+/* Glassmorphism Card Container */
+.container {
+    background: rgba(20, 28, 45, 0.85);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.15);
+    border-top: 3px solid #ff4500;
+    border-radius: 16px;
+    padding: 30px 25px;
+    width: 90%;
+    max-width: 480px;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7), 0 0 15px rgba(255, 69, 0, 0.3);
+    z-index: 1;
+}
+
+h1 {
+    font-family: 'Orbitron', sans-serif;
+    color: #00d4ff;
+    text-shadow: 0 0 10px rgba(0, 212, 255, 0.6);
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 1.4rem;
+}
+
+.form-group {
+    margin-bottom: 15px;
+}
+
+label {
+    display: block;
+    margin-bottom: 6px;
+    font-size: 0.85rem;
+    color: #cfd8dc;
+}
+
+input, select {
+    width: 100%;
+    padding: 12px;
+    background: rgba(10, 15, 25, 0.9);
+    border: 1px solid #2a3b5c;
+    border-radius: 8px;
+    color: #fff;
+    font-size: 0.95rem;
+    outline: none;
+    transition: all 0.3s ease;
+}
+
+input:focus, select:focus {
+    border-color: #ff4500;
+    box-shadow: 0 0 10px rgba(255, 69, 0, 0.5);
+}
+
+button {
+    width: 100%;
+    padding: 14px;
+    background: linear-gradient(135deg, #ff4500, #ff7b00);
+    border: none;
+    border-radius: 8px;
+    color: #fff;
+    font-family: 'Orbitron', sans-serif;
+    font-weight: 700;
+    font-size: 1rem;
+    cursor: pointer;
+    text-transform: uppercase;
+    margin-top: 10px;
+    box-shadow: 0 5px 15px rgba(255, 69, 0, 0.4);
+    transition: transform 0.2s ease;
+}
+
+button:active {
+    transform: scale(0.98);
+}

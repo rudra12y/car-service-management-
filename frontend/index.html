@@ -1,98 +1,85 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Car Service Booking</title>
-  <link rel="stylesheet" href="style.css">
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Service Booking</title>
+    <!-- Versioning added to bypass mobile browser cache -->
+    <link rel="stylesheet" href="style.css?v=2">
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h2>Car Service Center</h2>
-      <nav>
-        <a href="index.html">Home & Book</a>
-        <a href="admin.html">Admin Panel</a>
-      </nav>
-    </header>
-
-    <!-- Booking Form -->
-    <div class="card">
-      <h3>Book a Service</h3>
-      <form id="bookingForm">
-        <input type="text" id="customerName" placeholder="Full Name" required>
-        <input type="tel" id="phone" placeholder="Phone Number" required>
-        <input type="text" id="carModel" placeholder="Car Model (e.g. Honda Civic)" required>
-        <select id="serviceType" required>
-          <option value="">Select Service Type</option>
-          <option value="Oil Change">Oil Change</option>
-          <option value="Brake Inspection">Brake Inspection</option>
-          <option value="Full Detailing">Full Detailing</option>
-        </select>
-        <input type="date" id="preferredDate" required>
-        <input type="time" id="preferredTime" required>
-        <button type="submit">Submit Request</button>
-      </form>
+    <div class="container">
+        <h1>⚙️ Book Your Car Service</h1>
+        <form id="bookingForm">
+            <div class="form-group">
+                <label for="customerName">Customer Name</label>
+                <input type="text" id="customerName" placeholder="Enter your full name" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="phone">Phone Number</label>
+                <input type="tel" id="phone" placeholder="Enter phone number" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="carModel">Vehicle Model / Car</label>
+                <input type="text" id="carModel" placeholder="e.g. Swift, Alto, Activa" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="serviceType">Service Type</label>
+                <select id="serviceType" required>
+                    <option value="">Select Service</option>
+                    <option value="Full Service">Full Service</option>
+                    <option value="Oil Change">Oil Change</option>
+                    <option value="Full Detailing">Full Detailing</option>
+                    <option value="Brake Inspection">Brake Inspection</option>
+                </select>
+            </div>
+            
+            <button type="submit">Submit Booking</button>
+        </form>
     </div>
 
-    <!-- Live Status Tracker -->
-    <div class="card">
-      <h3>Recent Service Requests</h3>
-      <table>
-        <thead>
-          <tr>
-            <th>Customer</th>
-            <th>Car Model</th>
-            <th>Service</th>
-            <th>Status</th>
-          </tr>
-        </thead>
-        <tbody id="bookingsTableBody"></tbody>
-      </table>
-    </div>
-  </div>
+    <script>
+        // Render Backend API URL
+        const API_URL = "https://car-service-management.onrender.com/api/bookings"; 
 
-  <script>
-    const API_URL = 'http://localhost:5000/api/bookings';
+        document.getElementById('bookingForm').addEventListener('submit', async (e) => {
+            e.preventDefault();
+            
+            const submitBtn = e.target.querySelector('button');
+            submitBtn.innerText = "Submitting...";
+            submitBtn.disabled = true;
 
-    // 1. Fetch & Display Bookings
-    async function loadBookings() {
-      const res = await fetch(API_URL);
-      const data = await res.json();
-      const tbody = document.getElementById('bookingsTableBody');
-      tbody.innerHTML = data.map(b => `
-        <tr>
-          <td>${b.customerName}</td>
-          <td>${b.carModel}</td>
-          <td>${b.serviceType}</td>
-          <td><span class="badge badge-${b.status.replace(' ', '-')}">${b.status}</span></td>
-        </tr>
-      `).join('');
-    }
+            const bookingData = {
+                customerName: document.getElementById('customerName').value,
+                phone: document.getElementById('phone').value,
+                carModel: document.getElementById('carModel').value,
+                serviceType: document.getElementById('serviceType').value
+            };
 
-    // 2. Submit Form
-    document.getElementById('bookingForm').addEventListener('submit', async (e) => {
-      e.preventDefault();
-      const payload = {
-        customerName: document.getElementById('customerName').value,
-        phone: document.getElementById('phone').value,
-        carModel: document.getElementById('carModel').value,
-        serviceType: document.getElementById('serviceType').value,
-        preferredDate: document.getElementById('preferredDate').value,
-        preferredTime: document.getElementById('preferredTime').value
-      };
+            try {
+                const response = await fetch(API_URL, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(bookingData)
+                });
 
-      await fetch(API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify(payload)
-      });
-
-      alert('Booking submitted successfully!');
-      e.target.reset();
-      loadBookings();
-    });
-
-    loadBookings();
-  </script>
+                if (response.ok) {
+                    alert('✅ Booking Submitted Successfully!');
+                    document.getElementById('bookingForm').reset();
+                } else {
+                    alert('❌ Failed to submit booking. Please try again.');
+                }
+            } catch (error) {
+                console.error('Error:', error);
+                alert('⚠️ Server connection error! Please check if backend is running.');
+            } finally {
+                submitBtn.innerText = "Submit Booking";
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
 </body>
 </html>
