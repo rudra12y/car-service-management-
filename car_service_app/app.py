@@ -4,7 +4,9 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
-CORS(app)
+
+# Allow all origins for CORS to fix frontend & browser connection issues
+CORS(app, resources={r"/*": {"origins": "*"}})
 
 EXCEL_FILE = "car_service_orders.xlsx"
 
