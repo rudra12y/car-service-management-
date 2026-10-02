@@ -3,46 +3,55 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Car Service Booking</title>
+    <title>Brotomotiv Style Service Booking</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-    <div class="booking-card">
-        <h2>Car Service Booking</h2>
+    <div class="booking-container">
+        <div class="brand-header">
+            <h1>BROTOMOTIV</h1>
+            <p>DETAILED & PRECISION CAR CARE</p>
+        </div>
+
         <form id="bookingForm">
             <div class="form-group">
-                <input type="text" id="name" placeholder="Full Name" required>
+                <label for="name">Full Name</label>
+                <input type="text" id="name" placeholder="Enter your full name" required>
             </div>
             
             <div class="form-group">
-                <input type="tel" id="phone" placeholder="Phone Number (10 Digits)" required pattern="[0-9]{10}">
+                <label for="phone">Contact Number</label>
+                <input type="tel" id="phone" placeholder="10 Digit Mobile Number" required pattern="[0-9]{10}">
             </div>
             
             <div class="form-group">
-                <input type="text" id="car_model" placeholder="Vehicle Model / Car" required>
+                <label for="car_model">Vehicle & Model</label>
+                <input type="text" id="car_model" placeholder="e.g. Tata Harrier, Fortuner" required>
             </div>
             
             <div class="form-group">
-                <label for="service_date">Service Date</label>
+                <label for="service_date">Appointment Date</label>
                 <input type="date" id="service_date" required>
             </div>
             
             <div class="form-group">
-                <label for="service_type">Service Type</label>
+                <label for="service_type">Select Service Required</label>
                 <select id="service_type" required>
+                    <option value="Paint Protection Film (PPF)">Paint Protection Film (PPF)</option>
+                    <option value="Ceramic & Graphene Coating">Ceramic & Graphene Coating</option>
                     <option value="Wheel Alignment">Wheel Alignment</option>
                     <option value="Tyre Change">Tyre Change</option>
                     <option value="AC Check">AC Check</option>
                     <option value="Air Filter">Air Filter</option>
                     <option value="Denting & Repair">Denting & Repair</option>
-                    <option value="Full Service">Full Service</option>
-                    <option value="Oil Change">Oil Change</option>
-                    <option value="Washing">Washing</option>
+                    <option value="Full Body Painting">Full Body Painting</option>
+                    <option value="Sound Damping">Sound Damping</option>
+                    <option value="Vinyl Wrap">Vinyl Wrap</option>
                 </select>
             </div>
             
-            <button type="submit" id="submitBtn">SUBMIT BOOKING</button>
+            <button type="submit" id="submitBtn">BOOK APPOINTMENT</button>
         </form>
     </div>
 
@@ -74,7 +83,7 @@
                 });
 
                 if (response.ok) {
-                    alert("Booking Submitted Successfully!");
+                    alert("Booking Request Submitted Successfully!");
                     document.getElementById("bookingForm").reset();
                 } else {
                     const errData = await response.json();
