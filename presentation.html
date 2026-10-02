@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="gu">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Service Management System - Presentation</title>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        body {
+            /* Premium Garage Background Image with Visible Luxury Cars */
+            background: linear-gradient(rgba(11, 13, 16, 0.85), rgba(11, 13, 16, 0.92)), 
+                        url('https://images.unsplash.com/photo-1613214149922-f1809c99b414?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover fixed;
+            color: #ffffff;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+            overflow: hidden;
+        }
+        .slider-container {
+            width: 88%;
+            max-width: 1050px;
+            height: 600px;
+            background: rgba(20, 23, 29, 0.92);
+            backdrop-filter: blur(12px);
+            border: 2px solid #ff5500;
+            border-radius: 16px;
+            box-shadow: 0 0 35px rgba(255, 85, 0, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+        .slide {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            padding: 40px 50px;
+            display: none;
+            flex-direction: column;
+            justify-content: center;
+            opacity: 0;
+            transition: opacity 0.4s ease-in-out;
+        }
+        .slide.active {
+            display: flex;
+            opacity: 1;
+        }
+        .slide h1 {
+            color: #ff5500;
+            font-size: 32px;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            text-shadow: 0 0 10px rgba(255, 85, 0, 0.3);
+        }
+        .slide h2 {
+            color: #ffffff;
+            font-size: 22px;
+            margin-bottom: 18px;
+            border-bottom: 2px solid #ff5500;
+            padding-bottom: 8px;
+        }
+        .slide p, .slide li {
+            font-size: 16px;
+            line-height: 1.6;
+            color: #b0b8c5;
+            margin-bottom: 10px;
+        }
+        .slide ul {
+            margin-left: 20px;
+        }
+        .highlight {
+            color: #ff5500;
+            font-weight: bold;
+        }
+        .controls {
+            margin-top: 18px;
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+        button {
+            background-color: #ff5500;
+            color: white;
+            border: none;
+            padding: 10px 22px;
+            font-size: 15px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: 0.3s;
+            box-shadow: 0 4px 15px rgba(255, 85, 0, 0.3);
+        }
+        button:hover {
+            background-color: #e04b00;
+            box-shadow: 0 0 15px rgba(255, 85, 0, 0.6);
+        }
+        .slide-counter {
+            font-size: 16px;
+            color: #8a94a6;
+            font-weight: 600;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="slider-container">
+
+        <!-- Slide 1: Title -->
+        <div class="slide active">
+            <h1>Car Service Management System</h1>
+            <p>A Premium Cloud-Connected Automotive Service & Detailing Booking Platform</p>
+            <br>
+            <h2>Team Members & Responsibilities</h2>
+            <ul>
+                <li><span class="highlight">Rudra Goswami:</span> Backend Developer (Flask API, CORS, OpenPyXL, Render Hosting)</li>
+                <li><span class="highlight">Shivang Mistry:</span> Frontend Lead (HTML5, CSS3, JS, Brotomotiv Theme, Modals)</li>
+                <li><span class="highlight">Dhruvin:</span> Testing & QA Specialist (API Validation, Cross-Browser Checks)</li>
+                <li><span class="highlight">Kartavya:</span> Documentation & Business Analyst (SRS, Workflow, Future Scope)</li>
+            </ul>
+        </div>
+
+        <!-- Slide 2: Project Aim -->
+        <div class="slide">
+            <h2>Aim & Objectives of the Project</h2>
+            <ul>
+                <li><span class="highlight">Automate Garage Operations:</span> Eliminate traditional manual registration and long phone queues.</li>
+                <li><span class="highlight">Modern UI/UX:</span> Provide a high-end dark garage detailing theme with glowing orange accents inspired by Brotomotiv.</li>
+                <li><span class="highlight">Instant Card Booking:</span> Enable customers to book directly by clicking on visual service photo cards.</li>
+                <li><span class="highlight">Lightweight Data Storage:</span> Store live bookings in Excel (`.xlsx`) format without complex database overhead.</li>
+            </ul>
+        </div>
+
+        <!-- Slide 3: Software & Tech Stack -->
+        <div class="slide">
+            <h2>Software & Technologies Used</h2>
+            <ul>
+                <li><span class="highlight">Frontend:</span> HTML5, CSS3 (Glassmorphic UI), JavaScript (ES6 Fetch API)</li>
+                <li><span class="highlight">Backend Framework:</span> Python 3.14, Flask REST API, `flask-cors`</li>
+                <li><span class="highlight">Database Engine:</span> OpenPyXL (Automated Excel spreadsheet database)</li>
+                <li><span class="highlight">Cloud Deployment:</span> GitHub Pages (Frontend Hosting) & Render Cloud (Backend Server)</li>
+                <li><span class="highlight">IDE & Tools:</span> VS Code, Git, GitHub Desktop</li>
+            </ul>
+        </div>
+
+        <!-- Slide 4: Advantages -->
+        <div class="slide">
+            <h2>Advantages of the System</h2>
+            <ul>
+                <li><span class="highlight">Zero Maintenance Cost:</span> Built completely using free-tier cloud infrastructure (GitHub Pages + Render).</li>
+                <li><span class="highlight">Ultra-Fast Direct Booking:</span> Direct card-click modal popup removes extra page reloads.</li>
+                <li><span class="highlight">No DB Overhead:</span> OpenPyXL eliminates heavy SQL/NoSQL setup requirements.</li>
+                <li><span class="highlight">Fully Responsive:</span> Seamlessly adapts to mobile, tablet, and desktop screens.</li>
+                <li><span class="highlight">Real-time Admin Tracking:</span> Live counter for total, pending, and completed service orders.</li>
+            </ul>
+        </div>
+
+        <!-- Slide 5: Disadvantages & Limitations -->
+        <div class="slide">
+            <h2>Disadvantages & Limitations</h2>
+            <ul>
+                <li><span class="highlight">Excel Concurrency Limit:</span> Excel handles small-to-medium traffic well, but huge simultaneous writes require a SQL database.</li>
+                <li><span class="highlight">Render Cold Start:</span> Render free instances go to sleep after inactivity and take 30–40 seconds to awaken on the first request.</li>
+                <li><span class="highlight">Basic Security:</span> Admin panel operates on direct route access without multi-factor or JWT authentication.</li>
+            </ul>
+        </div>
+
+        <!-- Slide 6: Future Scope -->
+        <div class="slide">
+            <h2>Future Scope & Upgrades</h2>
+            <ul>
+                <li><span class="highlight">PostgreSQL / SQLite Integration:</span> Migration from Excel to relational databases for scalable high traffic.</li>
+                <li><span class="highlight">Online Payment Gateway:</span> Integrating Razorpay / UPI for token amount confirmation.</li>
+                <li><span class="highlight">Automated SMS/WhatsApp Alerts:</span> Twilio API integration to send real-time service update messages.</li>
+                <li><span class="highlight">Mechanic Dashboard:</span> Dedicated portal for workshop mechanics to update task progress.</li>
+            </ul>
+        </div>
+
+        <!-- Slide 7: Conclusion -->
+        <div class="slide">
+            <h1>Thank You!</h1>
+            <p>Car Service Management System</p>
+            <br>
+            <h2>Questions & Answers</h2>
+            <p>We are open for any feedback or technical questions.</p>
+        </div>
+
+    </div>
+
+    <!-- Navigation Controls -->
+    <div class="controls">
+        <button onclick="prevSlide()">❮ Previous</button>
+        <span class="slide-counter" id="counter">Slide 1 of 7</span>
+        <button onclick="nextSlide()">Next ❯</button>
+    </div>
+
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const counter = document.getElementById('counter');
+
+        function updateSlide() {
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active');
+                if (index === currentSlide) {
+                    slide.classList.add('active');
+                }
+            });
+            counter.innerText = `Slide ${currentSlide + 1} of ${slides.length}`;
+        }
+
+        function nextSlide() {
+            if (currentSlide < slides.length - 1) {
+                currentSlide++;
+                updateSlide();
+            }
+        }
+
+        function prevSlide() {
+            if (currentSlide > 0) {
+                currentSlide--;
+                updateSlide();
+            }
+        }
+
+        // Support for Keyboard Arrow Keys
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') prevSlide();
+        });
+    </script>
+</body>
+</html>
