@@ -8,14 +8,13 @@
 }
 
 body {
-    background: linear-gradient(rgba(11, 13, 16, 0.9), rgba(11, 13, 16, 0.95)), 
-                url('https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover attachment;
+    background: linear-gradient(rgba(11, 13, 16, 0.92), rgba(11, 13, 16, 0.96)), 
+                url('https://images.unsplash.com/photo-1617814076367-b759c7d7e738?q=80&w=1920&auto=format&fit=crop') no-repeat center center/cover fixed;
     color: #ffffff;
     min-height: 100vh;
     padding: 40px 20px;
     display: flex;
-    flex-direction: column;
-    align-items: center;
+    justify-content: center;
 }
 
 .main-wrapper {
@@ -23,53 +22,67 @@ body {
     max-width: 1200px;
 }
 
-/* Services Section Header */
-.section-title {
+/* Header Styling */
+.brand-header {
     text-align: center;
-    font-size: 24px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    margin-bottom: 30px;
-    text-transform: uppercase;
+    margin-bottom: 40px;
 }
 
-.section-title span {
+.brand-header h1 {
     color: #ff5500;
+    font-size: 32px;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    text-shadow: 0 0 15px rgba(255, 85, 0, 0.4);
+}
+
+.brand-header p {
+    color: #a0aab8;
+    font-size: 14px;
+    margin-top: 6px;
+    letter-spacing: 1px;
 }
 
 /* Services Grid */
 .services-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-    gap: 20px;
-    margin-bottom: 50px;
+    grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+    gap: 25px;
 }
 
 .service-card {
-    background: #14171d;
-    border: 1px solid #232730;
-    border-radius: 12px;
+    background: rgba(20, 23, 29, 0.9);
+    border: 1px solid #282d38;
+    border-radius: 14px;
     overflow: hidden;
     cursor: pointer;
-    transition: all 0.3s ease;
+    transition: all 0.35s ease;
     display: flex;
     flex-direction: column;
+    position: relative;
+    box-shadow: 0 10px 25px rgba(0, 0, 0, 0.5);
 }
 
 .service-card:hover {
-    transform: translateY(-5px);
+    transform: translateY(-8px);
     border-color: #ff5500;
-    box-shadow: 0 8px 25px rgba(255, 85, 0, 0.3);
+    box-shadow: 0 12px 30px rgba(255, 85, 0, 0.35);
 }
 
 .service-card img {
     width: 100%;
-    height: 160px;
+    height: 180px;
     object-fit: cover;
+    transition: transform 0.35s ease;
+}
+
+.service-card:hover img {
+    transform: scale(1.05);
 }
 
 .service-card-info {
-    padding: 15px;
+    padding: 18px;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -77,75 +90,117 @@ body {
 }
 
 .service-card-info h3 {
-    font-size: 14px;
+    font-size: 15px;
     font-weight: 600;
     color: #ffffff;
 }
 
-.service-card-info .arrow {
-    color: #ff5500;
-    font-size: 16px;
-    font-weight: bold;
+.service-card-info .btn-tag {
+    background: #ff5500;
+    color: #ffffff;
+    font-size: 12px;
+    font-weight: 600;
+    padding: 6px 12px;
+    border-radius: 6px;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
 }
 
-/* Booking Container */
-.booking-container {
-    max-width: 550px;
-    margin: 0 auto;
-    background: rgba(20, 23, 29, 0.95);
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 85, 0, 0.3);
+/* Modal Popup Overlay */
+.modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.85);
+    backdrop-filter: blur(8px);
+    display: none;
+    justify-content: center;
+    align-items: center;
+    z-index: 1000;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.modal-overlay.active {
+    display: flex;
+    opacity: 1;
+}
+
+.modal-content {
+    background: #14171d;
+    border: 1px solid rgba(255, 85, 0, 0.4);
     border-radius: 16px;
-    padding: 35px 30px;
-    box-shadow: 0px 15px 35px rgba(0, 0, 0, 0.8);
+    width: 90%;
+    max-width: 480px;
+    padding: 30px;
+    position: relative;
+    box-shadow: 0 20px 40px rgba(0, 0, 0, 0.8);
+    animation: modalSlide 0.3s ease forwards;
 }
 
-.brand-header {
-    text-align: center;
-    margin-bottom: 25px;
+@keyframes modalSlide {
+    from { transform: translateY(30px); opacity: 0; }
+    to { transform: translateY(0); opacity: 1; }
 }
 
-.brand-header h1 {
+.close-modal {
+    position: absolute;
+    top: 15px;
+    right: 20px;
+    color: #8a94a6;
+    font-size: 24px;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.close-modal:hover {
     color: #ff5500;
-    font-size: 26px;
+}
+
+.modal-header {
+    margin-bottom: 20px;
+}
+
+.modal-header h2 {
+    color: #ff5500;
+    font-size: 20px;
     font-weight: 700;
-    letter-spacing: 1.5px;
     text-transform: uppercase;
 }
 
-.brand-header p {
-    color: #8a94a6;
+.modal-header p {
+    color: #a0aab8;
     font-size: 13px;
-    margin-top: 4px;
+    margin-top: 2px;
 }
 
 .form-group {
-    margin-bottom: 18px;
+    margin-bottom: 16px;
 }
 
 .form-group label {
     display: block;
-    font-size: 13px;
+    font-size: 12px;
     color: #b0b8c5;
-    margin-bottom: 6px;
+    margin-bottom: 5px;
     font-weight: 500;
 }
 
-.form-group input,
-.form-group select {
+.form-group input {
     width: 100%;
-    padding: 12px 15px;
+    padding: 12px 14px;
     background-color: #1a1e26;
     border: 1px solid #2d3340;
     border-radius: 8px;
     color: #ffffff;
     font-size: 14px;
     outline: none;
-    transition: all 0.3s ease;
+    transition: border-color 0.3s ease;
 }
 
-.form-group input:focus,
-.form-group select:focus {
+.form-group input:focus {
     border-color: #ff5500;
     box-shadow: 0 0 8px rgba(255, 85, 0, 0.4);
 }
@@ -157,7 +212,7 @@ button#submitBtn {
     color: #ffffff;
     border: none;
     border-radius: 8px;
-    font-size: 15px;
+    font-size: 14px;
     font-weight: 600;
     letter-spacing: 1px;
     cursor: pointer;
@@ -170,4 +225,9 @@ button#submitBtn {
 button#submitBtn:hover {
     background: linear-gradient(135deg, #ff661a, #ff5500);
     box-shadow: 0 6px 20px rgba(255, 85, 0, 0.5);
+}
+
+button#submitBtn:disabled {
+    background: #55240c;
+    cursor: not-allowed;
 }

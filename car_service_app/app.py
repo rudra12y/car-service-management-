@@ -5,7 +5,7 @@ from flask_cors import CORS
 
 app = Flask(__name__)
 
-# Complete CORS configuration to support requests from GitHub Pages frontend
+# Cross-Origin requests allow karne ke liye CORS configuration
 CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
 EXCEL_FILE = "car_service_orders.xlsx"
