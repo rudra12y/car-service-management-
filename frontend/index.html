@@ -4,8 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Car Service Booking</title>
-    <!-- Versioning added to bypass mobile browser cache -->
-    <link rel="stylesheet" href="style.css?v=2">
+    <link rel="stylesheet" href="style.css?v=3">
 </head>
 <body>
     <div class="container">
@@ -34,6 +33,12 @@
                     <option value="Oil Change">Oil Change</option>
                     <option value="Full Detailing">Full Detailing</option>
                     <option value="Brake Inspection">Brake Inspection</option>
+                    <option value="Tyre Change">Tyre Change</option>
+                    <option value="Alignment">Alignment</option>
+                    <option value="AC Check">AC Check</option>
+                    <option value="Air Filter">Air Filter</option>
+                    <option value="Gear Box">Gear Box</option>
+                    <option value="Denting Repair">Denting Repair</option>
                 </select>
             </div>
             
@@ -42,8 +47,7 @@
     </div>
 
     <script>
-        // Render Backend API URL
-        const API_URL = "https://car-service-management.onrender.com/api/bookings"; 
+        const API_URL = "http://127.0.0.1:5000/api/bookings"; 
 
         document.getElementById('bookingForm').addEventListener('submit', async (e) => {
             e.preventDefault();
@@ -74,7 +78,7 @@
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('⚠️ Server connection error! Please check if backend is running.');
+                alert('⚠️ Server connection error! Make sure python backend is running.');
             } finally {
                 submitBtn.innerText = "Submit Booking";
                 submitBtn.disabled = false;
