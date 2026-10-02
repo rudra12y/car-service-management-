@@ -1,56 +1,68 @@
+import os
+import openpyxl
 from flask import Flask, request, jsonify
 from flask_cors import CORS
 
 app = Flask(__name__)
 CORS(app)
 
-bookings = []
+EXCEL_FILE = "car_service_orders.xlsx"
 
-@app.route('/api/bookings', methods=['GET'])
+def init_excel():
+    if not os.path.exists(EXCEL_FILE):
+        wb = openpyxl.Workbook()
+        ws = wb.active
+        ws.title = "Bookings"
+        ws.append(["Name", "Phone", "Car Model", "Service Date", "Service Type", "Status"])
+        wb.save(EXCEL_FILE)
+
+init_excel()
+
+@app.route("/", methods=["GET"])
+def home():
+    return "Server is Active", 200
+
+@app.route("/api/bookings", methods=["GET"])
 def get_bookings():
-    return jsonify(bookings), 200
+    try:
+        wb = openpyxl.load_workbook(EXCEL_FILE)
+        ws = wb.active
+        bookings = []
+        for row in ws.iter_rows(min_row=2, values_only=True):
+            if any(row):
+                bookings.append({
+                    "name": row[0],
+                    "phone": row[1],
+                    "car_model": row[2],
+                    "service_date": str(row[3]),
+                    "service_type": row[4],
+                    "status": row[5] if len(row) > 5 else "Pending"
+                })
+        return jsonify(bookings), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
-@app.route('/api/bookings', methods=['POST'])
+@app.route("/api/bookings", methods=["POST"])
 def add_booking():
-    data = request.json
-    if not data or not data.get('customerName') or not data.get('phone'):
-        return jsonify({"error": "Invalid data"}), 400
-    
-    selected_date = data.get("bookingDate")
-    
-    # 1 Date par kitni bookings hain check karein
-    existing_count = sum(1 for b in bookings if b.get("bookingDate") == selected_date)
-    
-    # 3 car limit cross hote hi 'Waiting' assign karein
-    booking_status = "Waiting" if existing_count >= 3 else "Pending"
+    try:
+        data = request.json
+        if not data:
+            return jsonify({"error": "No data received"}), 400
 
-    new_booking = {
-        "customerName": data.get("customerName"),
-        "phone": data.get("phone"),
-        "carModel": data.get("carModel"),
-        "bookingDate": selected_date,
-        "serviceType": data.get("serviceType"),
-        "status": booking_status
-    }
-    bookings.append(new_booking)
-    
-    return jsonify({
-        "message": "Booking added successfully!",
-        "status": booking_status
-    }), 201
+        wb = openpyxl.load_workbook(EXCEL_FILE)
+        ws = wb.active
+        ws.append([
+            data.get("name"),
+            data.get("phone"),
+            data.get("car_model"),
+            data.get("service_date"),
+            data.get("service_type"),
+            "Pending"
+        ])
+        wb.save(EXCEL_FILE)
+        return jsonify({"message": "Booking successful"}), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
-@app.route('/api/toggle-status/<int:index>', methods=['POST'])
-def toggle_status(index):
-    if 0 <= index < len(bookings):
-        current_status = bookings[index].get("status", "Pending")
-        if current_status == "Completed":
-            bookings[index]["status"] = "Pending"
-        else:
-            bookings[index]["status"] = "Completed"
-            
-        return jsonify({"message": "Status updated", "status": bookings[index]["status"]}), 200
-    return jsonify({"error": "Index out of range"}), 404
-
-if __name__ == '__main__':
-    app.run(debug=True, port=5000)
-    
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
