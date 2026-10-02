@@ -7,19 +7,37 @@
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="booking-container">
+
+    <div class="booking-card">
         <h2>Car Service Booking</h2>
         <form id="bookingForm">
-            <input type="text" id="name" placeholder="Full Name" required>
-            <input type="tel" id="phone" placeholder="Phone Number (10 Digits)" required pattern="[0-9]{10}">
-            <input type="text" id="car_model" placeholder="Vehicle Model / Car" required>
-            <input type="date" id="service_date" required>
-            <select id="service_type" required>
-                <option value="Full Service">Full Service</option>
-                <option value="Tyre Change">Tyre Change</option>
-                <option value="Oil Change">Oil Change</option>
-                <option value="Washing">Washing</option>
-            </select>
+            <div class="form-group">
+                <input type="text" id="name" placeholder="Full Name" required>
+            </div>
+            
+            <div class="form-group">
+                <input type="tel" id="phone" placeholder="Phone Number (10 Digits)" required pattern="[0-9]{10}">
+            </div>
+            
+            <div class="form-group">
+                <input type="text" id="car_model" placeholder="Vehicle Model / Car" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="service_date">Service Date</label>
+                <input type="date" id="service_date" required>
+            </div>
+            
+            <div class="form-group">
+                <label for="service_type">Service Type</label>
+                <select id="service_type" required>
+                    <option value="Full Service">Full Service</option>
+                    <option value="Tyre Change">Tyre Change</option>
+                    <option value="Oil Change">Oil Change</option>
+                    <option value="Washing">Washing</option>
+                </select>
+            </div>
+            
             <button type="submit" id="submitBtn">SUBMIT BOOKING</button>
         </form>
     </div>
@@ -30,6 +48,7 @@
         document.getElementById("bookingForm").addEventListener("submit", async function(e) {
             e.preventDefault();
             const submitBtn = document.getElementById("submitBtn");
+            const originalText = submitBtn.innerText;
             submitBtn.innerText = "SUBMITTING...";
             submitBtn.disabled = true;
 
@@ -60,7 +79,7 @@
             } catch (error) {
                 alert("Server connection error! Please wait a moment while backend connects.");
             } finally {
-                submitBtn.innerText = "SUBMIT BOOKING";
+                submitBtn.innerText = originalText;
                 submitBtn.disabled = false;
             }
         });
