@@ -1,110 +1,73 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+import os
+import openpyxl
+from flask import Flask, request, jsonify
+from flask_cors import CORS
 
-* {
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    font-family: 'Poppins', sans-serif;
-}
+app = Flask(__name__)
 
-body {
-    background-color: #0b0d10;
-    color: #ffffff;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    padding: 20px;
-}
+# Complete CORS configuration to prevent request blocks from frontend
+CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
 
-.booking-container {
-    width: 100%;
-    max-width: 500px;
-    background: #14171d;
-    border: 1px solid #232730;
-    border-radius: 12px;
-    padding: 30px;
-    box-shadow: 0px 10px 30px rgba(0, 0, 0, 0.6);
-}
+EXCEL_FILE = "car_service_orders.xlsx"
 
-.brand-header {
-    text-align: center;
-    margin-bottom: 25px;
-}
+def init_excel():
+    if not os.path.exists(EXCEL_FILE):
+        wb = openpyxl.Workbook()
+        ws = wb.active
+        ws.title = "Bookings"
+        ws.append(["Name", "Phone", "Car Model", "Service Date", "Service Type", "Status"])
+        wb.save(EXCEL_FILE)
 
-.brand-header h1 {
-    color: #ff5500;
-    font-size: 28px;
-    font-weight: 700;
-    letter-spacing: 1px;
-    text-transform: uppercase;
-}
+init_excel()
 
-.brand-header p {
-    color: #8a94a6;
-    font-size: 13px;
-    margin-top: 5px;
-}
+@app.route("/", methods=["GET"])
+def home():
+    return "Server is Active", 200
 
-.form-group {
-    margin-bottom: 18px;
-}
+@app.route("/api/bookings", methods=["GET"])
+def get_bookings():
+    try:
+        wb = openpyxl.load_workbook(EXCEL_FILE)
+        ws = wb.active
+        bookings = []
+        for row in ws.iter_rows(min_row=2, values_only=True):
+            if any(row):
+                bookings.append({
+                    "name": row[0],
+                    "phone": row[1],
+                    "car_model": row[2],
+                    "service_date": str(row[3]),
+                    "service_type": row[4],
+                    "status": row[5] if len(row) > 5 else "Pending"
+                })
+        return jsonify(bookings), 200
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
-.form-group label {
-    display: block;
-    font-size: 13px;
-    color: #b0b8c5;
-    margin-bottom: 6px;
-    font-weight: 500;
-}
+@app.route("/api/bookings", methods=["POST", "OPTIONS"])
+def add_booking():
+    if request.method == "OPTIONS":
+        return jsonify({"status": "OK"}), 200
+        
+    try:
+        data = request.json
+        if not data:
+            return jsonify({"error": "No data received"}), 400
 
-.form-group input,
-.form-group select {
-    width: 100%;
-    padding: 12px 15px;
-    background-color: #1a1e26;
-    border: 1px solid #2d3340;
-    border-radius: 8px;
-    color: #ffffff;
-    font-size: 14px;
-    outline: none;
-    transition: border-color 0.3s ease;
-}
+        wb = openpyxl.load_workbook(EXCEL_FILE)
+        ws = wb.active
+        ws.append([
+            data.get("name"),
+            data.get("phone"),
+            data.get("car_model"),
+            data.get("service_date"),
+            data.get("service_type"),
+            "Pending"
+        ])
+        wb.save(EXCEL_FILE)
+        return jsonify({"message": "Booking successful"}), 201
+    except Exception as e:
+        return jsonify({"error": str(e)}), 500
 
-.form-group input:focus,
-.form-group select:focus {
-    border-color: #ff5500;
-}
-
-.form-group input::placeholder {
-    color: #5c6575;
-}
-
-button#submitBtn {
-    width: 100%;
-    padding: 14px;
-    background-color: #ff5500;
-    color: #ffffff;
-    border: none;
-    border-radius: 8px;
-    font-size: 15px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    cursor: pointer;
-    text-transform: uppercase;
-    transition: background 0.3s ease, transform 0.1s ease;
-    margin-top: 10px;
-}
-
-button#submitBtn:hover {
-    background-color: #e04b00;
-}
-
-button#submitBtn:active {
-    transform: scale(0.98);
-}
-
-button#submitBtn:disabled {
-    background-color: #55240c;
-    cursor: not-allowed;
-}
+if __name__ == "__main__":
+    app.run(host="0.0.0.0", port=5000)
