@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Dashboard - Car Service</title>
-    <link rel="stylesheet" href="style.css?v=7">
+    <link rel="stylesheet" href="style.css?v=8">
     <style>
         .container { max-width: 950px; width: 95%; }
         table { width: 100%; border-collapse: collapse; margin-top: 15px; }
@@ -48,7 +48,8 @@
     </div>
 
     <script>
-        const API_URL = "http://127.0.0.1:5000/api/bookings";
+        const API_URL = "https://car-service-management-backend.onrender.com/api/bookings";
+        const TOGGLE_URL = "https://car-service-management-backend.onrender.com/api/toggle-status";
 
         async function fetchBookings() {
             try {
@@ -93,7 +94,7 @@
 
         async function toggleStatus(index) {
             try {
-                await fetch(`http://127.0.0.1:5000/api/toggle-status/${index}`, { method: 'POST' });
+                await fetch(`${TOGGLE_URL}/${index}`, { method: 'POST' });
                 fetchBookings();
             } catch (err) {
                 alert("Status update failed!");

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Car Service Booking</title>
-    <link rel="stylesheet" href="style.css?v=7">
+    <link rel="stylesheet" href="style.css?v=8">
     <style>
         .modal-overlay {
             position: fixed;
@@ -96,7 +96,8 @@
     </div>
 
     <script>
-        const API_URL = "http://127.0.0.1:5000/api/bookings"; 
+        // Live Render Backend URL for mobile/online access
+        const API_URL = "https://car-service-management-backend.onrender.com/api/bookings"; 
 
         const dateInput = document.getElementById('bookingDate');
         const today = new Date().toISOString().split('T')[0];
@@ -155,7 +156,7 @@
                 }
             } catch (error) {
                 console.error('Error:', error);
-                alert('⚠️ Server connection error! Make sure python backend is running.');
+                alert('⚠️ Server connection error! Please wait a moment while backend connects.');
             } finally {
                 submitBtn.innerText = "Submit Booking";
                 submitBtn.disabled = false;

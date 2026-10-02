@@ -18,10 +18,10 @@ def add_booking():
     
     selected_date = data.get("bookingDate")
     
-    # Same date waali existing bookings count karein
+    # 1 Date par kitni bookings hain check karein
     existing_count = sum(1 for b in bookings if b.get("bookingDate") == selected_date)
     
-    # Agar 3 se zyada ho chuki hain toh 'Waiting' status, nahi toh 'Pending'
+    # 3 car limit cross hote hi 'Waiting' assign karein
     booking_status = "Waiting" if existing_count >= 3 else "Pending"
 
     new_booking = {
@@ -43,7 +43,6 @@ def add_booking():
 def toggle_status(index):
     if 0 <= index < len(bookings):
         current_status = bookings[index].get("status", "Pending")
-        # Pending/Waiting ↔ Completed toggle logic
         if current_status == "Completed":
             bookings[index]["status"] = "Pending"
         else:
@@ -54,3 +53,4 @@ def toggle_status(index):
 
 if __name__ == '__main__':
     app.run(debug=True, port=5000)
+    
