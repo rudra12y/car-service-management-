@@ -1,73 +1,199 @@
-import os
-import openpyxl
-from flask import Flask, request, jsonify
-from flask_cors import CORS
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Car Service Management</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        .service-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            border-bottom: 2px solid #ff5500;
+        }
+    </style>
+</head>
+<body>
 
-app = Flask(__name__)
+    <div class="main-wrapper">
+        <div class="brand-header">
+            <h1>CAR SERVICE MANAGEMENT</h1>
+            <p>CLICK ON ANY SERVICE TO BOOK INSTANTLY</p>
+        </div>
 
-# Cross-Origin requests allow karne ke liye CORS configuration
-CORS(app, resources={r"/*": {"origins": "*"}}, supports_credentials=True)
+        <!-- Direct Clickable Service Cards Grid with Exact Action Photos -->
+        <div class="services-grid">
+            <!-- 1. Paint Protection Film (PPF) - Film squeegee work -->
+            <div class="service-card" onclick="openBookingModal('Paint Protection Film (PPF)')">
+                <img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?q=80&w=600&auto=format&fit=crop" alt="Paint Protection Film">
+                <div class="service-card-info">
+                    <h3>Paint Protection Film</h3>
+                    <span class="btn-tag">Book</span>
+                </div>
+            </div>
 
-EXCEL_FILE = "car_service_orders.xlsx"
+            <!-- 2. Ceramic Coating - Polishing / Detailing work -->
+            <div class="service-card" onclick="openBookingModal('Ceramic & Graphene Coating')">
+                <img src="https://images.unsplash.com/photo-1607860108855-64acf2078ed9?q=80&w=600&auto=format&fit=crop" alt="Ceramic Coating">
+                <div class="service-card-info">
+                    <h3>Ceramic Coating</h3>
+                    <span class="btn-tag">Book</span>
+                </div>
+            </div>
 
-def init_excel():
-    if not os.path.exists(EXCEL_FILE):
-        wb = openpyxl.Workbook()
-        ws = wb.active
-        ws.title = "Bookings"
-        ws.append(["Name", "Phone", "Car Model", "Service Date", "Service Type", "Status"])
-        wb.save(EXCEL_FILE)
+            <!-- 3. Wheel Alignment - Tire & Rim alignment machine -->
+            <div class="service-card" onclick="openBookingModal('Wheel Alignment')">
+                <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=600&auto=format&fit=crop" alt="Wheel Alignment">
+                <div class="service-card-info">
+                    <h3>Wheel Alignment</h3>
+                    <span class="btn-tag">Book</span>
+                </div>
+            </div>
 
-init_excel()
+            <!-- 4. Full Body Painting - Paint gun spray booth -->
+            <div class="service-card" onclick="openBookingModal('Full Body Painting')">
+                <img src="https://images.unsplash.com/photo-1625047509168-a7026f36de04?q=80&w=600&auto=format&fit=crop" alt="Full Body Painting">
+                <div class="service-card-info">
+                    <h3>Full Body Painting</h3>
+                    <span class="btn-tag">Book</span>
+                </div>
+            </div>
 
-@app.route("/", methods=["GET"])
-def home():
-    return "Server is Active", 200
+            <!-- 5. Denting & Repair - Metal panel repair & welding -->
+            <div class="service-card" onclick="openBookingModal('Denting & Repair')">
+                <img src="https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?q=80&w=600&auto=format&fit=crop" alt="Denting & Repair">
+                <div class="service-card-info">
+                    <h3>Denting & Repair</h3>
+                    <span class="btn-tag">Book</span>
+                </div>
+            </div>
 
-@app.route("/api/bookings", methods=["GET"])
-def get_bookings():
-    try:
-        wb = openpyxl.load_workbook(EXCEL_FILE)
-        ws = wb.active
-        bookings = []
-        for row in ws.iter_rows(min_row=2, values_only=True):
-            if any(row):
-                bookings.append({
-                    "name": row[0],
-                    "phone": row[1],
-                    "car_model": row[2],
-                    "service_date": str(row[3]),
-                    "service_type": row[4],
-                    "status": row[5] if len(row) > 5 else "Pending"
-                })
-        return jsonify(bookings), 200
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+            <!-- 6. Sound Damping - Door panel insulation sheet -->
+            <div class="service-card" onclick="openBookingModal('Sound Damping')">
+                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=600&auto=format&fit=crop" alt="Sound Damping">
+                <div class="service-card-info">
+                    <h3>Sound Damping</h3>
+                    <span class="btn-tag">Book</span>
+                </div>
+            </div>
 
-@app.route("/api/bookings", methods=["POST", "OPTIONS"])
-def add_booking():
-    if request.method == "OPTIONS":
-        return jsonify({"status": "OK"}), 200
-        
-    try:
-        data = request.json
-        if not data:
-            return jsonify({"error": "No data received"}), 400
+            <!-- 7. Air Filter & AC Check - Car cabin filter check -->
+            <div class="service-card" onclick="openBookingModal('Air Filter & AC Check')">
+                <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=600&auto=format&fit=crop" alt="Air Filter & AC Check">
+                <div class="service-card-info">
+                    <h3>Air Filter & AC Check</h3>
+                    <span class="btn-tag">Book</span>
+                </div>
+            </div>
 
-        wb = openpyxl.load_workbook(EXCEL_FILE)
-        ws = wb.active
-        ws.append([
-            data.get("name"),
-            data.get("phone"),
-            data.get("car_model"),
-            data.get("service_date"),
-            data.get("service_type"),
-            "Pending"
-        ])
-        wb.save(EXCEL_FILE)
-        return jsonify({"message": "Booking successful"}), 201
-    except Exception as e:
-        return jsonify({"error": str(e)}), 500
+            <!-- 8. Full Service - Engine oil pour & mechanic service -->
+            <div class="service-card" onclick="openBookingModal('Full Service')">
+                <img src="https://images.unsplash.com/photo-1487754180451-c456f719a1fc?q=80&w=600&auto=format&fit=crop" alt="Full Service">
+                <div class="service-card-info">
+                    <h3>Full Service</h3>
+                    <span class="btn-tag">Book</span>
+                </div>
+            </div>
+        </div>
+    </div>
 
-if __name__ == "__main__":
-    app.run(host="0.0.0.0", port=5000)
+    <!-- Booking Modal Popup -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal-content">
+            <span class="close-modal" onclick="closeBookingModal()">&times;</span>
+            <div class="modal-header">
+                <h2 id="modalTitle">BOOK SERVICE</h2>
+                <p>Enter details to confirm appointment</p>
+            </div>
+
+            <form id="bookingForm">
+                <input type="hidden" id="selected_service">
+
+                <div class="form-group">
+                    <label for="name">Full Name</label>
+                    <input type="text" id="name" placeholder="Enter your full name" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="phone">Contact Number</label>
+                    <input type="tel" id="phone" placeholder="10 Digit Mobile Number" required pattern="[0-9]{10}">
+                </div>
+                
+                <div class="form-group">
+                    <label for="car_model">Vehicle Model</label>
+                    <input type="text" id="car_model" placeholder="e.g. Tata Harrier, Fortuner" required>
+                </div>
+                
+                <div class="form-group">
+                    <label for="service_date">Appointment Date</label>
+                    <input type="date" id="service_date" required>
+                </div>
+                
+                <button type="submit" id="submitBtn">CONFIRM BOOKING</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        const BACKEND_URL = "https://car-service-management-backend.onrender.com/api/bookings";
+
+        function openBookingModal(serviceName) {
+            document.getElementById("selected_service").value = serviceName;
+            document.getElementById("modalTitle").innerText = "BOOK: " + serviceName.toUpperCase();
+            document.getElementById("modalOverlay").classList.add("active");
+        }
+
+        function closeBookingModal() {
+            document.getElementById("modalOverlay").classList.remove("active");
+        }
+
+        window.onclick = function(event) {
+            const modal = document.getElementById("modalOverlay");
+            if (event.target === modal) {
+                closeBookingModal();
+            }
+        }
+
+        document.getElementById("bookingForm").addEventListener("submit", async function(e) {
+            e.preventDefault();
+            const submitBtn = document.getElementById("submitBtn");
+            const originalText = submitBtn.innerText;
+            submitBtn.innerText = "SUBMITTING...";
+            submitBtn.disabled = true;
+
+            const formData = {
+                name: document.getElementById("name").value,
+                phone: document.getElementById("phone").value,
+                car_model: document.getElementById("car_model").value,
+                service_date: document.getElementById("service_date").value,
+                service_type: document.getElementById("selected_service").value
+            };
+
+            try {
+                const response = await fetch(BACKEND_URL, {
+                    method: "POST",
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify(formData)
+                });
+
+                if (response.ok) {
+                    alert("Booking Request Submitted Successfully!");
+                    document.getElementById("bookingForm").reset();
+                    closeBookingModal();
+                } else {
+                    const errData = await response.json();
+                    alert("Error: " + (errData.error || "Failed to submit booking"));
+                }
+            } catch (error) {
+                alert("Server connection error! Please wait a moment while backend connects.");
+            } finally {
+                submitBtn.innerText = originalText;
+                submitBtn.disabled = false;
+            }
+        });
+    </script>
+</body>
+</html>
