@@ -5,6 +5,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Car Service Management</title>
     <link rel="stylesheet" href="style.css">
+    <style>
+        /* Fallback styling for image loading */
+        .service-card img {
+            width: 100%;
+            height: 200px;
+            object-fit: cover;
+            background-color: #1e2430;
+        }
+    </style>
 </head>
 <body>
 
@@ -14,11 +23,11 @@
             <p>CLICK ON ANY SERVICE TO BOOK INSTANTLY</p>
         </div>
 
-        <!-- Direct Clickable Service Cards Grid with Local Images -->
+        <!-- Direct Clickable Service Cards Grid with Reliable CDN Images -->
         <div class="services-grid">
             <!-- 1. Paint Protection Film (PPF) -->
             <div class="service-card" onclick="openBookingModal('Paint Protection Film (PPF)')">
-                <img src="images/ppf.jpg" alt="Paint Protection Film">
+                <img src="https://images.pexels.com/photos/6873088/pexels-photo-6873088.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Paint Protection Film">
                 <div class="service-card-info">
                     <h3>Paint Protection Film</h3>
                     <span class="btn-tag">Book</span>
@@ -27,7 +36,7 @@
 
             <!-- 2. Ceramic & Graphene Coating -->
             <div class="service-card" onclick="openBookingModal('Ceramic & Graphene Coating')">
-                <img src="images/ceramic.jpg" alt="Ceramic Coating">
+                <img src="https://images.pexels.com/photos/372810/pexels-photo-372810.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Ceramic Coating">
                 <div class="service-card-info">
                     <h3>Ceramic Coating</h3>
                     <span class="btn-tag">Book</span>
@@ -36,7 +45,7 @@
 
             <!-- 3. Wheel Alignment -->
             <div class="service-card" onclick="openBookingModal('Wheel Alignment')">
-                <img src="images/wheel.jpg" alt="Wheel Alignment">
+                <img src="https://images.pexels.com/photos/3806249/pexels-photo-3806249.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Wheel Alignment">
                 <div class="service-card-info">
                     <h3>Wheel Alignment</h3>
                     <span class="btn-tag">Book</span>
@@ -45,7 +54,7 @@
 
             <!-- 4. Full Body Painting -->
             <div class="service-card" onclick="openBookingModal('Full Body Painting')">
-                <img src="images/painting.jpg" alt="Full Body Painting">
+                <img src="https://images.pexels.com/photos/8986118/pexels-photo-8986118.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Full Body Painting">
                 <div class="service-card-info">
                     <h3>Full Body Painting</h3>
                     <span class="btn-tag">Book</span>
@@ -54,7 +63,7 @@
 
             <!-- 5. Denting & Repair -->
             <div class="service-card" onclick="openBookingModal('Denting & Repair')">
-                <img src="images/denting.jpg" alt="Denting & Repair">
+                <img src="https://images.pexels.com/photos/4489749/pexels-photo-4489749.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Denting & Repair">
                 <div class="service-card-info">
                     <h3>Denting & Repair</h3>
                     <span class="btn-tag">Book</span>
@@ -63,7 +72,7 @@
 
             <!-- 6. Sound Damping -->
             <div class="service-card" onclick="openBookingModal('Sound Damping')">
-                <img src="images/sound.jpg" alt="Sound Damping">
+                <img src="https://images.pexels.com/photos/4489794/pexels-photo-4489794.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Sound Damping">
                 <div class="service-card-info">
                     <h3>Sound Damping</h3>
                     <span class="btn-tag">Book</span>
@@ -72,7 +81,7 @@
 
             <!-- 7. Air Filter & AC Check -->
             <div class="service-card" onclick="openBookingModal('Air Filter & AC Check')">
-                <img src="images/ac.jpg" alt="Air Filter & AC Check">
+                <img src="https://images.pexels.com/photos/4489732/pexels-photo-4489732.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Air Filter & AC Check">
                 <div class="service-card-info">
                     <h3>Air Filter & AC Check</h3>
                     <span class="btn-tag">Book</span>
@@ -81,7 +90,7 @@
 
             <!-- 8. Full Service -->
             <div class="service-card" onclick="openBookingModal('Full Service')">
-                <img src="images/fullservice.jpg" alt="Full Service">
+                <img src="https://images.pexels.com/photos/13065690/pexels-photo-13065690.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Full Service">
                 <div class="service-card-info">
                     <h3>Full Service</h3>
                     <span class="btn-tag">Book</span>
