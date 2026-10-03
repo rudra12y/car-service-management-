@@ -6,12 +6,44 @@
     <title>Car Service Management</title>
     <link rel="stylesheet" href="style.css">
     <style>
-        /* Fallback styling for image loading */
-        .service-card img {
+        /* Fallback & Guaranteed Visual Graphics for Cards */
+        .card-visual {
             width: 100%;
-            height: 200px;
-            object-fit: cover;
-            background-color: #1e2430;
+            height: 180px;
+            background: linear-gradient(135deg, #1f242d 0%, #11141a 100%);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            border-bottom: 2px solid #ff5500;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .card-visual svg {
+            width: 64px;
+            height: 64px;
+            fill: #ff5500;
+            filter: drop-shadow(0 0 12px rgba(255, 85, 0, 0.6));
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover .card-visual svg {
+            transform: scale(1.15);
+        }
+
+        .card-visual .badge {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(255, 85, 0, 0.2);
+            color: #ff5500;
+            border: 1px solid #ff5500;
+            font-size: 11px;
+            font-weight: bold;
+            padding: 3px 8px;
+            border-radius: 4px;
+            text-transform: uppercase;
         }
     </style>
 </head>
@@ -23,11 +55,16 @@
             <p>CLICK ON ANY SERVICE TO BOOK INSTANTLY</p>
         </div>
 
-        <!-- Direct Clickable Service Cards Grid with Reliable CDN Images -->
+        <!-- 100% Guaranteed Visual Cards Grid -->
         <div class="services-grid">
-            <!-- 1. Paint Protection Film (PPF) -->
+            <!-- 1. Paint Protection Film -->
             <div class="service-card" onclick="openBookingModal('Paint Protection Film (PPF)')">
-                <img src="https://images.pexels.com/photos/6873088/pexels-photo-6873088.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Paint Protection Film">
+                <div class="card-visual">
+                    <span class="badge">PPF Film</span>
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2L2 7l10 5 10-5-10-5zM2 17l10 5 10-5M2 12l10 5 10-5" stroke="#ff5500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                </div>
                 <div class="service-card-info">
                     <h3>Paint Protection Film</h3>
                     <span class="btn-tag">Book</span>
@@ -36,7 +73,12 @@
 
             <!-- 2. Ceramic & Graphene Coating -->
             <div class="service-card" onclick="openBookingModal('Ceramic & Graphene Coating')">
-                <img src="https://images.pexels.com/photos/372810/pexels-photo-372810.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Ceramic Coating">
+                <div class="card-visual">
+                    <span class="badge">Coating</span>
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2.69l5.66 5.66a8 8 0 1 1-11.31 0z" stroke="#ff5500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                </div>
                 <div class="service-card-info">
                     <h3>Ceramic Coating</h3>
                     <span class="btn-tag">Book</span>
@@ -45,7 +87,14 @@
 
             <!-- 3. Wheel Alignment -->
             <div class="service-card" onclick="openBookingModal('Wheel Alignment')">
-                <img src="https://images.pexels.com/photos/3806249/pexels-photo-3806249.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Wheel Alignment">
+                <div class="card-visual">
+                    <span class="badge">Alignment</span>
+                    <svg viewBox="0 0 24 24">
+                        <circle cx="12" cy="12" r="9" stroke="#ff5500" stroke-width="2" fill="none"/>
+                        <circle cx="12" cy="12" r="3" stroke="#ff5500" stroke-width="2" fill="none"/>
+                        <path d="M12 3v6M12 15v6M3 12h6M15 12h6" stroke="#ff5500" stroke-width="2"/>
+                    </svg>
+                </div>
                 <div class="service-card-info">
                     <h3>Wheel Alignment</h3>
                     <span class="btn-tag">Book</span>
@@ -54,7 +103,12 @@
 
             <!-- 4. Full Body Painting -->
             <div class="service-card" onclick="openBookingModal('Full Body Painting')">
-                <img src="https://images.pexels.com/photos/8986118/pexels-photo-8986118.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Full Body Painting">
+                <div class="card-visual">
+                    <span class="badge">Spray Booth</span>
+                    <svg viewBox="0 0 24 24">
+                        <path d="M19 11D12 11D12 21M5 3h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2z" stroke="#ff5500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                </div>
                 <div class="service-card-info">
                     <h3>Full Body Painting</h3>
                     <span class="btn-tag">Book</span>
@@ -63,7 +117,12 @@
 
             <!-- 5. Denting & Repair -->
             <div class="service-card" onclick="openBookingModal('Denting & Repair')">
-                <img src="https://images.pexels.com/photos/4489749/pexels-photo-4489749.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Denting & Repair">
+                <div class="card-visual">
+                    <span class="badge">Body Work</span>
+                    <svg viewBox="0 0 24 24">
+                        <path d="M14.7 6.3a1 1 0 0 0 0 1.4l1.6 1.6a1 1 0 0 0 1.4 0l3.77-3.77a6 6 0 0 1-7.94 7.94l-6.91 6.91a2.12 2.12 0 0 1-3-3l6.91-6.91a6 6 0 0 1 7.94-7.94l-3.76 3.76z" stroke="#ff5500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                </div>
                 <div class="service-card-info">
                     <h3>Denting & Repair</h3>
                     <span class="btn-tag">Book</span>
@@ -72,7 +131,12 @@
 
             <!-- 6. Sound Damping -->
             <div class="service-card" onclick="openBookingModal('Sound Damping')">
-                <img src="https://images.pexels.com/photos/4489794/pexels-photo-4489794.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Sound Damping">
+                <div class="card-visual">
+                    <span class="badge">Insulation</span>
+                    <svg viewBox="0 0 24 24">
+                        <path d="M11 5L6 9H2v6h4l5 4V5zM15.54 8.46a5 5 0 0 1 0 7.07M19.07 4.93a10 10 0 0 1 0 14.14" stroke="#ff5500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                </div>
                 <div class="service-card-info">
                     <h3>Sound Damping</h3>
                     <span class="btn-tag">Book</span>
@@ -81,7 +145,12 @@
 
             <!-- 7. Air Filter & AC Check -->
             <div class="service-card" onclick="openBookingModal('Air Filter & AC Check')">
-                <img src="https://images.pexels.com/photos/4489732/pexels-photo-4489732.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Air Filter & AC Check">
+                <div class="card-visual">
+                    <span class="badge">AC Cooling</span>
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 2v20M2 12h20M17 7l-1.41 1.41M8.41 15.59L7 17M17 17l-1.41-1.41M8.41 8.41L7 7" stroke="#ff5500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                </div>
                 <div class="service-card-info">
                     <h3>Air Filter & AC Check</h3>
                     <span class="btn-tag">Book</span>
@@ -90,7 +159,12 @@
 
             <!-- 8. Full Service -->
             <div class="service-card" onclick="openBookingModal('Full Service')">
-                <img src="https://images.pexels.com/photos/13065690/pexels-photo-13065690.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Full Service">
+                <div class="card-visual">
+                    <span class="badge">Full Care</span>
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" stroke="#ff5500" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+                    </svg>
+                </div>
                 <div class="service-card-info">
                     <h3>Full Service</h3>
                     <span class="btn-tag">Book</span>
