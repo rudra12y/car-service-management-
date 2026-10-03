@@ -80,7 +80,7 @@
 
             <!-- 7. Air Filter & AC Check - Car cabin filter check -->
             <div class="service-card" onclick="openBookingModal('Air Filter & AC Check')">
-                <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=600&auto=format&fit=crop" alt="Air Filter & AC Check">
+                <img src=""C:\Users\rudra\Downloads\WhatsApp Image 2026-10-03 at 11.15.43 AM.jpeg"" alt="Air Filter & AC Check">
                 <div class="service-card-info">
                     <h3>Air Filter & AC Check</h3>
                     <span class="btn-tag">Book</span>
