@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automotiv Login</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="display:flex; flex-direction:column; justify-content:center; align-items:center; min-height:100vh; padding:20px;">
+    <a href="index.html" class="logo" style="font-size:38px; margin-bottom:20px;"><span>AUTO</span>MOTIV</a>
+    <div class="cms-box">
+        <div style="display:flex; border-bottom:1px solid #222; margin-bottom:20px;">
+            <div id="tL" onclick="sw('l')" style="flex:1; text-align:center; padding:10px; font-weight:800; color:#f5b800; border-bottom:3px solid #f5b800; cursor:pointer;">LOG IN</div>
+            <div id="tS" onclick="sw('s')" style="flex:1; text-align:center; padding:10px; font-weight:800; color:#777; cursor:pointer;">SIGN UP</div>
+        </div>
+        <form id="lForm">
+            <input type="email" id="lEmail" class="input-dark" placeholder="Email Address" required>
+            <input type="password" id="lPass" class="input-dark" placeholder="Password" required>
+            <button type="submit" id="lBtn" class="btn-yellow" style="width:100%;">Log In</button>
+            <p style="font-size:11px; color:#777; text-align:center; margin-top:12px;">Admin: admin@garage.com | admin123</p>
+        </form>
+        <form id="sForm" style="display:none;">
+            <input type="text" id="rName" class="input-dark" placeholder="Full Name" required>
+            <input type="email" id="rEmail" class="input-dark" placeholder="Email Address" required>
+            <input type="tel" id="rPhone" class="input-dark" pattern="[0-9]{10}" placeholder="10 Digit Mobile" required>
+            <input type="password" id="rPass" class="input-dark" placeholder="Password" required>
+            <button type="submit" id="sBtn" class="btn-yellow" style="width:100%;">Create Account</button>
+        </form>
+    </div>
+    <a href="index.html" style="color:#888; font-size:12px; margin-top:15px; text-decoration:none;">← Back to Home</a>
+    <script>
+        const API_BASE = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost"
+            ? "http://127.0.0.1:5000/api"
+            : "https://car-service-management-backend.onrender.com/api";
+        function sw(m) {
+            document.getElementById('lForm').style.display = m==='l'?'block':'none';
+            document.getElementById('sForm').style.display = m==='s'?'block':'none';
+            document.getElementById('tL').style.color = m==='l'?'#f5b800':'#777';
+            document.getElementById('tS').style.color = m==='s'?'#f5b800':'#777';
+        }
+        document.getElementById("sForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            try {
+                const res = await fetch(`${API_BASE}/signup`, {
+                    method: "POST", headers: {"Content-Type":"application/json"},
+                    body: JSON.stringify({ full_name: rName.value, email: rEmail.value, phone: rPhone.value, password: rPass.value })
+                });
+                const d = await res.json();
+                if (res.ok) { alert("Account created! Now Log In."); sw('l'); } else { alert(d.error); }
+            } catch(e) { alert("Server waking up! Wait 15s and try again."); }
+        });
+        document.getElementById("lForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            try {
+                const res = await fetch(`${API_BASE}/login`, {
+                    method: "POST", headers: {"Content-Type":"application/json"},
+                    body: JSON.stringify({ email: lEmail.value, password: lPass.value })
+                });
+                const d = await res.json();
+                if (res.ok) { localStorage.setItem("studioUser", JSON.stringify(d.user)); window.location.href = d.user.role==="admin"?"admin.html":"index.html"; }
+                else { alert(d.error); }
+            } catch(e) { alert("Server waking up! Wait 15s and try again."); }
+        });
+    </script>
+</body>
+</html>

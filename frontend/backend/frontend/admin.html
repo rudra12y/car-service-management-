@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin CMS - Automotiv Bardoli</title>
+    <link rel="stylesheet" href="style.css">
+    <style>
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #111; }
+        th, td { padding: 14px; border-bottom: 1px solid #222; font-size: 13px; text-align: left; }
+        th { background: #1a1a1a; color: #f5b800; }
+    </style>
+</head>
+<body>
+    <nav class="navbar">
+        <a href="index.html" class="logo"><span>AUTO</span>MOTIV ADMIN</a>
+        <div class="top-actions"><a href="index.html" class="btn-outline-sm">Website</a><button onclick="logout()" class="btn-yellow-sm" style="border:none;cursor:pointer;">Logout</button></div>
+    </nav>
+    <section class="section-pad">
+        <div style="display:flex; justify-content:space-between; align-items:center;">
+            <h2 class="sec-heading">CUSTOMER <span class="yellow-text">BOOKINGS</span></h2>
+            <button onclick="load()" class="btn-yellow">Refresh</button>
+        </div>
+        <div style="overflow-x:auto;">
+            <table>
+                <thead><tr><th>ID</th><th>Name</th><th>Phone</th><th>Car</th><th>Service</th><th>Date</th><th>Status</th><th>Action</th></tr></thead>
+                <tbody id="tb"><tr><td colspan="8">Loading...</td></tr></tbody>
+            </table>
+        </div>
+    </section>
+    <script>
+        const API_URL = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost"
+            ? "http://127.0.0.1:5000/api/bookings"
+            : "https://car-service-management-backend.onrender.com/api/bookings";
+        const u = JSON.parse(localStorage.getItem("studioUser"));
+        if (!u || u.role !== "admin") { window.location.href = "login.html"; }
+        function logout() { localStorage.removeItem("studioUser"); window.location.href = "login.html"; }
+        async function load() {
+            const tb = document.getElementById("tb");
+            try {
+                const res = await fetch(API_URL);
+                const data = await res.json();
+                tb.innerHTML = data.length ? data.map(b => `<tr>
+                    <td>#${b.id}</td><td>${b.customer_name}</td><td>${b.phone}</td><td>${b.car_model}</td>
+                    <td style="color:#f5b800;font-weight:700;">${b.service_type}</td><td>${b.service_date}</td><td>${b.status}</td>
+                    <td>${b.status==='Pending'?`<button class="btn-yellow-sm" style="border:none;cursor:pointer;" onclick="done(${b.id})">Mark Done</button>`:'✔ Done'}</td>
+                </tr>`).join('') : '<tr><td colspan="8">No bookings yet.</td></tr>';
+            } catch(e) { tb.innerHTML = '<tr><td colspan="8">Server waking up... Click Refresh in 15s.</td></tr>'; }
+        }
+        async function done(id) {
+            await fetch(`${API_URL}/${id}`, { method: "PUT", headers: {"Content-Type":"application/json"}, body: JSON.stringify({status:"Completed"}) });
+            load();
+        }
+        load();
+    </script>
+</body>
+</html>
