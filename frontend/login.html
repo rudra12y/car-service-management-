@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Automotiv CMS - Login & Sign Up</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body style="display:flex; flex-direction:column; justify-content:center; align-items:center; min-height:100vh; padding:20px;">
+
+    <a href="index.html" class="logo" style="font-size: 38px; margin-bottom: 6px;"><span>AUTO</span>MOTIV</a>
+    <p style="color:#cccccc; font-size:15px; font-weight:700; margin-bottom:25px;">Automotiv Studio Portal</p>
+
+    <div class="cms-box">
+        <div style="display:flex; border-bottom:1px solid #222; margin-bottom:22px;">
+            <div id="tabLogin" onclick="toggleAuth('login')" style="flex:1; text-align:center; padding:10px; font-weight:800; color:#f5b800; border-bottom:3px solid #f5b800; cursor:pointer;">LOG IN</div>
+            <div id="tabSignup" onclick="toggleAuth('signup')" style="flex:1; text-align:center; padding:10px; font-weight:800; color:#777; cursor:pointer;">SIGN UP</div>
+        </div>
+
+        <!-- Login Form -->
+        <form id="loginForm">
+            <label style="font-size:12px; color:#ccc; display:block; margin-bottom:6px;">Email Address</label>
+            <input type="email" id="loginEmail" class="input-dark" placeholder="Enter your email" style="margin-bottom:16px;" required>
+
+            <label style="font-size:12px; color:#ccc; display:block; margin-bottom:6px;">Password</label>
+            <input type="password" id="loginPassword" class="input-dark" placeholder="Enter your password" style="margin-bottom:22px;" required>
+
+            <button type="submit" class="btn-yellow" style="width:100%; font-size:14px;">Log In</button>
+            <p style="font-size:11px; color:#777; text-align:center; margin-top:14px;">Admin Login: admin@garage.com | admin123</p>
+        </form>
+
+        <!-- Sign Up Form -->
+        <form id="signupForm" style="display:none;">
+            <label style="font-size:12px; color:#ccc; display:block; margin-bottom:5px;">Full Name</label>
+            <input type="text" id="regName" class="input-dark" placeholder="Enter your full name" style="margin-bottom:12px;" required>
+
+            <label style="font-size:12px; color:#ccc; display:block; margin-bottom:5px;">Email Address</label>
+            <input type="email" id="regEmail" class="input-dark" placeholder="Enter your email" style="margin-bottom:12px;" required>
+
+            <label style="font-size:12px; color:#ccc; display:block; margin-bottom:5px;">Mobile Number</label>
+            <input type="tel" id="regPhone" class="input-dark" pattern="[0-9]{10}" placeholder="10 Digit Mobile Number" style="margin-bottom:12px;" required>
+
+            <label style="font-size:12px; color:#ccc; display:block; margin-bottom:5px;">Password</label>
+            <input type="password" id="regPassword" class="input-dark" placeholder="Create password" style="margin-bottom:18px;" required>
+
+            <button type="submit" class="btn-yellow" style="width:100%; font-size:14px;">Create Account</button>
+        </form>
+    </div>
+
+    <a href="index.html" style="color:#888; font-size:12px; margin-top:18px; text-decoration:none;">← Back to Home</a>
+
+    <script>
+        const API_BASE = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost"
+            ? "http://127.0.0.1:5000/api"
+            : "https://car-service-management-backend.onrender.com/api";
+
+        function toggleAuth(mode) {
+            const isLogin = mode === 'login';
+            document.getElementById('loginForm').style.display = isLogin ? 'block' : 'none';
+            document.getElementById('signupForm').style.display = isLogin ? 'none' : 'block';
+            document.getElementById('tabLogin').style.color = isLogin ? '#f5b800' : '#777';
+            document.getElementById('tabLogin').style.borderBottom = isLogin ? '3px solid #f5b800' : 'none';
+            document.getElementById('tabSignup').style.color = !isLogin ? '#f5b800' : '#777';
+            document.getElementById('tabSignup').style.borderBottom = !isLogin ? '3px solid #f5b800' : 'none';
+        }
+
+        document.getElementById("signupForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const res = await fetch(`${API_BASE}/signup`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    full_name: document.getElementById("regName").value,
+                    email: document.getElementById("regEmail").value,
+                    phone: document.getElementById("regPhone").value,
+                    password: document.getElementById("regPassword").value
+                })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                alert("Account created successfully! Please Log In.");
+                toggleAuth('login');
+            } else {
+                alert(data.error || "Sign up failed");
+            }
+        });
+
+        document.getElementById("loginForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const res = await fetch(`${API_BASE}/login`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({
+                    email: document.getElementById("loginEmail").value,
+                    password: document.getElementById("loginPassword").value
+                })
+            });
+            const data = await res.json();
+            if (res.ok) {
+                localStorage.setItem("studioUser", JSON.stringify(data.user));
+                window.location.href = data.user.role === "admin" ? "admin.html" : "index.html";
+            } else {
+                alert(data.error || "Invalid credentials");
+            }
+        });
+    </script>
+</body>
+</html>

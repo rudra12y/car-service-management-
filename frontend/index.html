@@ -3,195 +3,398 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Car Service Management</title>
+    <title>Automotiv - Car Detailing & Paint Studio | Bardoli</title>
     <link rel="stylesheet" href="style.css">
-    <style>
-        .service-card img {
-            width: 100%;
-            height: 200px;
-            object-fit: cover;
-            border-bottom: 2px solid #ff5500;
-        }
-    </style>
+    <link href="https://unpkg.com/aos@2.3.1/dist/aos.css" rel="stylesheet">
 </head>
 <body>
 
-    <div class="main-wrapper">
-        <div class="brand-header">
-            <h1>CAR SERVICE MANAGEMENT</h1>
-            <p>CLICK ON ANY SERVICE TO BOOK INSTANTLY</p>
+    <!-- Top Utility Bar -->
+    <div class="top-bar">
+        <div class="top-contact">
+            <span>✉ rudragoswamiqwe@gmail.com</span>
+            <span>📞 7984651607</span>
         </div>
+        <div class="top-actions" id="topAuthArea">
+            <a href="#collab" class="btn-outline-sm">Collab</a>
+            <a href="login.html" class="btn-yellow-sm">Login / Sign Up</a>
+        </div>
+    </div>
 
-        <!-- Direct Clickable Service Cards Grid with Accurate Service Work Photos -->
+    <!-- Main Sticky Navbar -->
+    <nav class="navbar">
+        <a href="index.html" class="logo"><span>AUTO</span>MOTIV</a>
+        <ul class="nav-menu">
+            <li><a href="index.html" class="active">Home</a></li>
+            <li><a href="#about">About Us</a></li>
+            <li>
+                <a href="#services">Services ▾</a>
+                <div class="dropdown-menu">
+                    <a href="javascript:void(0)" onclick="openBooking('Paint Protection Film')">Paint Protection Film</a>
+                    <a href="javascript:void(0)" onclick="openBooking('Ceramic & Graphene Coating')">Ceramic & Graphene Coating</a>
+                    <a href="javascript:void(0)" onclick="openBooking('Panel Painting')">Panel Painting</a>
+                    <a href="javascript:void(0)" onclick="openBooking('Full Body Painting')">Full Body Painting</a>
+                    <a href="javascript:void(0)" onclick="openBooking('Insurance / Accidental Repair')">Insurance / Accidental Repair</a>
+                    <a href="javascript:void(0)" onclick="openBooking('Sound Damping')">Sound Damping</a>
+                    <a href="javascript:void(0)" onclick="openBooking('Vinyl Wrap')">Vinyl Wrap</a>
+                </div>
+            </li>
+            <li><a href="#gallery">Our Gallery</a></li>
+            <li><a href="#process">Process</a></li>
+        </ul>
+        <button class="btn-yellow" onclick="openBooking('General Service Enquiry')">Service Enquiry</button>
+    </nav>
+
+    <!-- Hero Banner -->
+    <section class="hero-split">
+        <div class="hero-left" data-aos="fade-right">
+            <h1>
+                PAINT PROTECTION.<br>
+                <span>DETAILING.</span><br>
+                CUSTOM PAINT JOBS.<br>
+                ALL UNDER ONE ROOF.
+            </h1>
+            <p>Trust our master technicians at Damdod Road, Bardoli to bring back the showroom beauty and mirror gloss your car deserves.</p>
+            <button class="btn-yellow" onclick="document.getElementById('services').scrollIntoView()">BOOK YOUR SLOT</button>
+        </div>
+        <div class="hero-right" data-aos="fade-left">
+            <img src="https://images.pexels.com/photos/6873088/pexels-photo-6873088.jpeg?auto=compress&cs=tinysrgb&w=1200" alt="Car Detailing Polishing">
+        </div>
+    </section>
+
+    <!-- Trust & What We Do Section -->
+    <section class="section-pad" id="about">
+        <div class="trust-banner" data-aos="fade-up">
+            <h2>AT AUTOMOTIV, WE DON'T JUST FIX CARS –<br><span class="yellow-text">WE BUILD TRUST</span></h2>
+            <div class="logo" style="font-size: 38px;"><span>AUTO</span>MOTIV</div>
+        </div>
+        <div class="what-we-do" data-aos="fade-up">
+            <h3>WHAT WE DO</h3>
+            <p>We provide expert paint correction, self-healing paint protection film (PPF), and ceramic detailing services to enhance your car's appearance and protect its factory finish. Our body shop handles repairs for dents and scratches, while customisation options like custom colours and acoustic damping add a personalised touch.</p>
+        </div>
+    </section>
+
+    <!-- Choose From A Range Of Premium Services -->
+    <section class="section-pad" id="services" style="padding-top: 10px;">
+        <h2 class="sec-heading" data-aos="fade-right">CHOOSE FROM A RANGE OF <span class="yellow-text">PREMIUM SERVICES</span></h2>
+        
         <div class="services-grid">
-            <!-- 1. Paint Protection Film (PPF) -->
-            <div class="service-card" onclick="openBookingModal('Paint Protection Film (PPF)')">
-                <img src="https://images.unsplash.com/photo-1619642751034-765dfdf7c58e?q=80&w=600&auto=format&fit=crop" alt="Paint Protection Film">
-                <div class="service-card-info">
-                    <h3>Paint Protection Film</h3>
-                    <span class="btn-tag">Book</span>
+            <!-- 1. Paint Protection Film -->
+            <div class="srv-card" data-aos="fade-up" onclick="openBooking('Paint Protection Film')">
+                <div class="srv-img-box">
+                    <img src="https://images.pexels.com/photos/6872148/pexels-photo-6872148.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Paint Protection Film">
+                </div>
+                <div class="srv-title">
+                    <h4>Paint Protection Film</h4>
+                    <span class="srv-arrow">↗</span>
                 </div>
             </div>
 
             <!-- 2. Ceramic & Graphene Coating -->
-            <div class="service-card" onclick="openBookingModal('Ceramic & Graphene Coating')">
-                <img src="https://images.unsplash.com/photo-1607860108855-64acf2078ed9?q=80&w=600&auto=format&fit=crop" alt="Ceramic Coating">
-                <div class="service-card-info">
-                    <h3>Ceramic Coating</h3>
-                    <span class="btn-tag">Book</span>
+            <div class="srv-card" data-aos="fade-up" data-aos-delay="50" onclick="openBooking('Ceramic & Graphene Coating')">
+                <div class="srv-img-box">
+                    <img src="https://images.pexels.com/photos/6872572/pexels-photo-6872572.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Ceramic & Graphene Coating">
+                </div>
+                <div class="srv-title">
+                    <h4>Ceramic & Graphene Coating</h4>
+                    <span class="srv-arrow">↗</span>
                 </div>
             </div>
 
-            <!-- 3. Wheel Alignment -->
-            <div class="service-card" onclick="openBookingModal('Wheel Alignment')">
-                <img src="https://images.unsplash.com/photo-1580273916550-e323be2ae537?q=80&w=600&auto=format&fit=crop" alt="Wheel Alignment">
-                <div class="service-card-info">
-                    <h3>Wheel Alignment</h3>
-                    <span class="btn-tag">Book</span>
+            <!-- 3. Panel Painting -->
+            <div class="srv-card" data-aos="fade-up" data-aos-delay="100" onclick="openBooking('Panel Painting')">
+                <div class="srv-img-box">
+                    <img src="https://images.pexels.com/photos/8986118/pexels-photo-8986118.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Panel Painting">
+                </div>
+                <div class="srv-title">
+                    <h4>Panel Painting</h4>
+                    <span class="srv-arrow">↗</span>
                 </div>
             </div>
 
             <!-- 4. Full Body Painting -->
-            <div class="service-card" onclick="openBookingModal('Full Body Painting')">
-                <img src="https://images.unsplash.com/photo-1625047509168-a7026f36de04?q=80&w=600&auto=format&fit=crop" alt="Full Body Painting">
-                <div class="service-card-info">
-                    <h3>Full Body Painting</h3>
-                    <span class="btn-tag">Book</span>
+            <div class="srv-card" data-aos="fade-up" data-aos-delay="150" onclick="openBooking('Full Body Painting')">
+                <div class="srv-img-box">
+                    <img src="https://images.pexels.com/photos/8986070/pexels-photo-8986070.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Full Body Painting">
+                </div>
+                <div class="srv-title">
+                    <h4>Full Body Painting</h4>
+                    <span class="srv-arrow">↗</span>
                 </div>
             </div>
 
-            <!-- 5. Denting & Repair -->
-            <div class="service-card" onclick="openBookingModal('Denting & Repair')">
-                <img src="https://images.unsplash.com/photo-1517524008697-84bbe3c3fd98?q=80&w=600&auto=format&fit=crop" alt="Denting & Repair">
-                <div class="service-card-info">
-                    <h3>Denting & Repair</h3>
-                    <span class="btn-tag">Book</span>
+            <!-- 5. Insurance / Accidental Repair -->
+            <div class="srv-card" data-aos="fade-up" data-aos-delay="200" onclick="openBooking('Insurance / Accidental Repair')">
+                <div class="srv-img-box">
+                    <img src="https://images.pexels.com/photos/4489749/pexels-photo-4489749.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Insurance / Accidental Repair">
+                </div>
+                <div class="srv-title">
+                    <h4>Insurance / Accidental Repair</h4>
+                    <span class="srv-arrow">↗</span>
                 </div>
             </div>
 
             <!-- 6. Sound Damping -->
-            <div class="service-card" onclick="openBookingModal('Sound Damping')">
-                <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?q=80&w=600&auto=format&fit=crop" alt="Sound Damping">
-                <div class="service-card-info">
-                    <h3>Sound Damping</h3>
-                    <span class="btn-tag">Book</span>
+            <div class="srv-card" data-aos="fade-up" onclick="openBooking('Sound Damping')">
+                <div class="srv-img-box">
+                    <img src="https://images.pexels.com/photos/4489794/pexels-photo-4489794.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Sound Damping">
+                </div>
+                <div class="srv-title">
+                    <h4>Sound Damping</h4>
+                    <span class="srv-arrow">↗</span>
                 </div>
             </div>
 
-            <!-- 7. Air Filter & AC Check -->
-            <div class="service-card" onclick="openBookingModal('Air Filter & AC Check')">
-                <img src="https://images.unsplash.com/photo-1563720223185-11003d516935?q=80&w=600&auto=format&fit=crop" alt="Air Filter & AC Check">
-                <div class="service-card-info">
-                    <h3>Air Filter & AC Check</h3>
-                    <span class="btn-tag">Book</span>
+            <!-- 7. Safety Glazing Film -->
+            <div class="srv-card" data-aos="fade-up" data-aos-delay="50" onclick="openBooking('Safety Glazing Film')">
+                <div class="srv-img-box">
+                    <img src="https://images.pexels.com/photos/6872601/pexels-photo-6872601.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Safety Glazing Film">
+                </div>
+                <div class="srv-title">
+                    <h4>Safety Glazing Film</h4>
+                    <span class="srv-arrow">↗</span>
                 </div>
             </div>
 
-            <!-- 8. Full Service -->
-            <div class="service-card" onclick="openBookingModal('Full Service')">
-                <img src="https://images.unsplash.com/photo-1487754180451-c456f719a1fc?q=80&w=600&auto=format&fit=crop" alt="Full Service">
-                <div class="service-card-info">
-                    <h3>Full Service</h3>
-                    <span class="btn-tag">Book</span>
+            <!-- 8. Sunroof Protection Film -->
+            <div class="srv-card" data-aos="fade-up" data-aos-delay="100" onclick="openBooking('Sunroof Protection Film')">
+                <div class="srv-img-box">
+                    <img src="https://images.pexels.com/photos/6872164/pexels-photo-6872164.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Sunroof Protection Film">
+                </div>
+                <div class="srv-title">
+                    <h4>Sunroof Protection Film</h4>
+                    <span class="srv-arrow">↗</span>
+                </div>
+            </div>
+
+            <!-- 9. Vinyl Wrap -->
+            <div class="srv-card" data-aos="fade-up" data-aos-delay="150" onclick="openBooking('Vinyl Wrap')">
+                <div class="srv-img-box">
+                    <img src="https://images.pexels.com/photos/3802510/pexels-photo-3802510.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Vinyl Wrap">
+                </div>
+                <div class="srv-title">
+                    <h4>Vinyl Wrap</h4>
+                    <span class="srv-arrow">↗</span>
+                </div>
+            </div>
+
+            <!-- 10. Miscellaneous -->
+            <div class="srv-card" data-aos="fade-up" data-aos-delay="200" onclick="openBooking('Miscellaneous')">
+                <div class="srv-img-box">
+                    <img src="https://images.pexels.com/photos/6873088/pexels-photo-6873088.jpeg?auto=compress&cs=tinysrgb&w=600" alt="Miscellaneous">
+                </div>
+                <div class="srv-title">
+                    <h4>Miscellaneous</h4>
+                    <span class="srv-arrow">↗</span>
                 </div>
             </div>
         </div>
-    </div>
+    </section>
 
-    <!-- Booking Modal Popup -->
-    <div class="modal-overlay" id="modalOverlay">
-        <div class="modal-content">
-            <span class="close-modal" onclick="closeBookingModal()">&times;</span>
-            <div class="modal-header">
-                <h2 id="modalTitle">BOOK SERVICE</h2>
-                <p>Enter details to confirm appointment</p>
+    <!-- Updated Stats & Social Media Reach Counters -->
+    <section class="section-pad" style="padding-top: 10px;">
+        <div class="stats-social-grid" data-aos="fade-up">
+            <div class="stats-boxes">
+                <div class="stat-card"><h3>1,000+</h3><p>Happy Customers</p></div>
+                <div class="stat-card"><h3>20,000+</h3><p>Hours of Work</p></div>
+                <div class="stat-card"><h3>2,000+</h3><p>Projects Handled</p></div>
+                <div class="stat-card"><h3>8+</h3><p>Years of Experience</p></div>
             </div>
+            <div class="social-boxes">
+                <div class="soc-card soc-yt"><h3>10,000+</h3><p>YouTube Subscribers</p></div>
+                <div class="soc-card soc-ig"><h3>50K+</h3><p>Instagram Followers</p></div>
+                <div class="soc-card soc-fb"><h3>30K+</h3><p>Facebook Community</p></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Our Gallery -->
+    <section class="section-pad" id="gallery" style="padding-top: 10px;">
+        <h2 class="sec-heading" data-aos="fade-right">OUR <span class="yellow-text">GALLERY</span></h2>
+        <div class="gallery-grid" data-aos="fade-up">
+            <div class="gallery-item"><img src="https://images.pexels.com/photos/6873088/pexels-photo-6873088.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Studio Work 1"></div>
+            <div class="gallery-item"><img src="https://images.pexels.com/photos/8986118/pexels-photo-8986118.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Studio Work 2"></div>
+            <div class="gallery-item"><img src="https://images.pexels.com/photos/4489702/pexels-photo-4489702.jpeg?auto=compress&cs=tinysrgb&w=700" alt="Studio Work 3"></div>
+        </div>
+    </section>
+
+    <!-- 4-Step Contact Process -->
+    <section class="section-pad" id="process" style="padding-top: 10px;">
+        <h2 class="sec-heading" data-aos="fade-right">CONTACT <span class="yellow-text">PROCESS</span></h2>
+        <div class="process-grid" data-aos="fade-up">
+            <div class="process-card">
+                <div class="step-circle">1</div>
+                <h4>1. Share Your Requirements</h4>
+                <p>Reach us through the service booking form & tell us what you are looking for. Make sure you check the filled details.</p>
+            </div>
+            <div class="process-card">
+                <div class="step-circle">2</div>
+                <h4>2. Schedule A Consultation</h4>
+                <p>If needed, you might have to bring your car in for a physical inspection at our Bardoli studio. If not, you shall receive a detailed estimate.</p>
+            </div>
+            <div class="process-card">
+                <div class="step-circle">3</div>
+                <h4>3. Book An Appointment</h4>
+                <p>Wish to proceed ahead? Then select your preferred date and lock the earliest available studio slot.</p>
+            </div>
+            <div class="process-card">
+                <div class="step-circle">4</div>
+                <h4>4. Bring Your Car In For Work</h4>
+                <p>Your appointment date has arrived! Simply walk in with your car at Damdod Road, Bardoli and our team takes care of the rest.</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Want To Collab With Us? -->
+    <section class="section-pad" id="collab" style="padding-top: 10px;">
+        <div class="collab-section" data-aos="fade-up">
+            <div>
+                <h2 class="sec-heading" style="margin-bottom: 15px;">WANT TO <span class="yellow-text">COLLAB</span> WITH US?</h2>
+                <p style="color:#999; font-size:13px; line-height:1.7;">Partner with our detailing & customisation studio in Bardoli for franchise enquiries, brand sponsorships, or fleet maintenance.</p>
+            </div>
+            <form onsubmit="event.preventDefault(); alert('Thank you! Our studio team will contact you shortly.'); this.reset();">
+                <div class="collab-form-grid">
+                    <input type="text" class="input-dark" placeholder="Full Name*" required>
+                    <input type="email" class="input-dark" placeholder="Email ID*" required>
+                    <input type="tel" class="input-dark" placeholder="Phone Number*" required>
+                    <input type="text" class="input-dark" placeholder="City*" required>
+                </div>
+                <textarea class="input-dark" rows="3" placeholder="Message*" style="margin-top: 15px;" required></textarea>
+                <button type="submit" class="btn-yellow" style="margin-top: 15px;">SUBMIT</button>
+            </form>
+        </div>
+    </section>
+
+    <!-- Updated Studio Footer -->
+    <footer class="footer">
+        <div class="footer-grid">
+            <div>
+                <div class="logo" style="margin-bottom: 12px;"><span>AUTO</span>MOTIV</div>
+                <p><strong>AUTOMOTIV STUDIO</strong><br>Damdod Road, Bardoli, Gujarat, India.</p>
+            </div>
+            <div>
+                <h4>Quick Links</h4>
+                <a href="index.html">Home</a>
+                <a href="#about">About Us</a>
+                <a href="#services">Services</a>
+                <a href="login.html">Customer / Admin Login</a>
+            </div>
+            <div>
+                <h4>Services</h4>
+                <a href="#services">Paint Protection Film</a>
+                <a href="#services">Ceramic & Graphene Coating</a>
+                <a href="#services">Full Body Painting</a>
+                <a href="#services">Sound Damping</a>
+            </div>
+            <div>
+                <h4>Contact Us</h4>
+                <p>✉ rudragoswamiqwe@gmail.com</p>
+                <p>📞 7984651607</p>
+                <p>📍 Damdod Road, Bardoli</p>
+            </div>
+        </div>
+        <p style="text-align:center; color:#666; font-size:12px; margin-top:25px;">Copyright © 2026 Automotiv Studio Bardoli. All rights reserved.</p>
+    </footer>
+
+    <!-- Service Booking Modal -->
+    <div class="modal-overlay" id="bookingModal">
+        <div class="cms-box">
+            <span class="close-modal" onclick="closeBooking()">&times;</span>
+            <h2 id="modalServiceTitle" style="color: #f5b800; font-size: 28px; margin-bottom: 5px;">BOOK SERVICE</h2>
+            <p style="color: #888; font-size: 12px; margin-bottom: 20px;">Fill details to lock your studio appointment</p>
 
             <form id="bookingForm">
-                <input type="hidden" id="selected_service">
-
-                <div class="form-group">
-                    <label for="name">Full Name</label>
-                    <input type="text" id="name" placeholder="Enter your full name" required>
+                <input type="hidden" id="serviceInput">
+                <div style="margin-bottom: 12px;">
+                    <input type="text" id="custName" class="input-dark" placeholder="Customer Full Name" required>
                 </div>
-                
-                <div class="form-group">
-                    <label for="phone">Contact Number</label>
-                    <input type="tel" id="phone" placeholder="10 Digit Mobile Number" required pattern="[0-9]{10}">
+                <div style="margin-bottom: 12px;">
+                    <input type="tel" id="custPhone" class="input-dark" pattern="[0-9]{10}" placeholder="10 Digit Mobile Number" required>
                 </div>
-                
-                <div class="form-group">
-                    <label for="car_model">Vehicle Model</label>
-                    <input type="text" id="car_model" placeholder="e.g. Tata Harrier, Fortuner" required>
+                <div style="margin-bottom: 12px;">
+                    <input type="text" id="carModel" class="input-dark" placeholder="Car Make & Model (e.g. Creta, Fortuner)" required>
                 </div>
-                
-                <div class="form-group">
-                    <label for="service_date">Appointment Date</label>
-                    <input type="date" id="service_date" required>
+                <div style="margin-bottom: 16px;">
+                    <input type="date" id="serviceDate" class="input-dark" required>
                 </div>
-                
-                <button type="submit" id="submitBtn">CONFIRM BOOKING</button>
+                <button type="submit" id="confirmBtn" class="btn-yellow" style="width: 100%;">CONFIRM APPOINTMENT</button>
             </form>
         </div>
     </div>
 
+    <script src="https://unpkg.com/aos@2.3.1/dist/aos.js"></script>
     <script>
-        const BACKEND_URL = "https://car-service-management-backend.onrender.com/api/bookings";
+        AOS.init({ duration: 650, once: true });
 
-        function openBookingModal(serviceName) {
-            document.getElementById("selected_service").value = serviceName;
-            document.getElementById("modalTitle").innerText = "BOOK: " + serviceName.toUpperCase();
-            document.getElementById("modalOverlay").classList.add("active");
+        const API_URL = window.location.hostname === "127.0.0.1" || window.location.hostname === "localhost"
+            ? "http://127.0.0.1:5000/api/bookings"
+            : "https://car-service-management-backend.onrender.com/api/bookings";
+
+        const currentUser = JSON.parse(localStorage.getItem("studioUser"));
+
+        if (currentUser) {
+            document.getElementById("topAuthArea").innerHTML = `
+                <span style="color:#f5b800; font-weight:700;">Hi, ${currentUser.full_name}</span>
+                ${currentUser.role === 'admin' ? '<a href="admin.html" class="btn-outline-sm">Admin CMS</a>' : ''}
+                <a href="javascript:void(0)" onclick="logout()" class="btn-yellow-sm">Logout</a>
+            `;
         }
 
-        function closeBookingModal() {
-            document.getElementById("modalOverlay").classList.remove("active");
+        function logout() {
+            localStorage.removeItem("studioUser");
+            window.location.href = "login.html";
         }
 
-        window.onclick = function(event) {
-            const modal = document.getElementById("modalOverlay");
-            if (event.target === modal) {
-                closeBookingModal();
+        function openBooking(serviceName) {
+            if (!currentUser) {
+                alert("Please Login or Sign Up first to book a service!");
+                window.location.href = "login.html";
+                return;
             }
+            document.getElementById("serviceInput").value = serviceName;
+            document.getElementById("modalServiceTitle").innerText = serviceName;
+            document.getElementById("custName").value = currentUser.full_name;
+            document.getElementById("custPhone").value = currentUser.phone;
+            document.getElementById("bookingModal").classList.add("active");
         }
 
-        document.getElementById("bookingForm").addEventListener("submit", async function(e) {
-            e.preventDefault();
-            const submitBtn = document.getElementById("submitBtn");
-            const originalText = submitBtn.innerText;
-            submitBtn.innerText = "SUBMITTING...";
-            submitBtn.disabled = true;
+        function closeBooking() {
+            document.getElementById("bookingModal").classList.remove("active");
+        }
 
-            const formData = {
-                name: document.getElementById("name").value,
-                phone: document.getElementById("phone").value,
-                car_model: document.getElementById("car_model").value,
-                service_date: document.getElementById("service_date").value,
-                service_type: document.getElementById("selected_service").value
+        document.getElementById("bookingForm").addEventListener("submit", async (e) => {
+            e.preventDefault();
+            const btn = document.getElementById("confirmBtn");
+            btn.innerText = "BOOKING...";
+            btn.disabled = true;
+
+            const payload = {
+                customer_name: document.getElementById("custName").value,
+                email: currentUser ? currentUser.email : "",
+                phone: document.getElementById("custPhone").value,
+                car_model: document.getElementById("carModel").value,
+                service_type: document.getElementById("serviceInput").value,
+                service_date: document.getElementById("serviceDate").value
             };
 
             try {
-                const response = await fetch(BACKEND_URL, {
+                const res = await fetch(API_URL, {
                     method: "POST",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify(formData)
+                    headers: { "Content-Type": "application/json" },
+                    body: JSON.stringify(payload)
                 });
-
-                if (response.ok) {
-                    alert("Booking Request Submitted Successfully!");
+                if (res.ok) {
+                    alert("Studio Appointment Booked Successfully!");
                     document.getElementById("bookingForm").reset();
-                    closeBookingModal();
+                    closeBooking();
                 } else {
-                    const errData = await response.json();
-                    alert("Error: " + (errData.error || "Failed to submit booking"));
+                    alert("Booking failed. Please check details.");
                 }
-            } catch (error) {
-                alert("Server connection error! Please wait a moment while backend connects.");
+            } catch (err) {
+                alert("Server connection error! Make sure backend is running.");
             } finally {
-                submitBtn.innerText = originalText;
-                submitBtn.disabled = false;
+                btn.innerText = "CONFIRM APPOINTMENT";
+                btn.disabled = false;
             }
         });
     </script>
